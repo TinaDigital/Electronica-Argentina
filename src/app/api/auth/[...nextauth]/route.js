@@ -2,9 +2,10 @@ import bcrypt from "bcrypt";
 import * as mongoose from "mongoose";
 import { User } from "../../../../models/User";
 import NextAuth from "next-auth";
+import authOptions from "../../../../libs/authOptions";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions = {
+const authOptions = {
   secret: process.env.SECRET,
   providers: [
     CredentialsProvider({
