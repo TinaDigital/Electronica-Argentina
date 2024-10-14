@@ -5,6 +5,7 @@ import { DM_Sans } from 'next/font/google'; // Importar fuente DM Sans
 import Whatsapp from '../components/icons/Whatsapp'
 import Footer from '../components/layout/Footer'
 import { Suspense } from 'react'
+import { Analytics } from "@vercel/analytics/react"
 
 const dmSans = DM_Sans({ subsets: ['latin'] }); // Configurar la fuente
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
           <Whatsapp />
           <Suspense fallback={<div>Cargando...</div>}>
             {children}
+            <Analytics />
           </Suspense>
           <Footer />
         </AppProvider>
