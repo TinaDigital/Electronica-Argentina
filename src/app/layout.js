@@ -4,6 +4,7 @@ import Header from '../components/layout/Header';
 import { DM_Sans } from 'next/font/google'; // Importar fuente DM Sans
 import Whatsapp from '../components/icons/Whatsapp'
 import Footer from '../components/layout/Footer'
+import { Suspense } from 'react'
 
 const dmSans = DM_Sans({ subsets: ['latin'] }); // Configurar la fuente
 
@@ -19,7 +20,9 @@ export default function RootLayout({ children }) {
         <AppProvider>
           <Header />
           <Whatsapp />
-          {children}
+          <Suspense fallback={<div>Cargando...</div>}>
+            {children}
+          </Suspense>
           <Footer />
         </AppProvider>
       </body>

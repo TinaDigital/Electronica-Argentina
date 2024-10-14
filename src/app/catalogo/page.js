@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { Search, ChevronDown, Filter } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Head from 'next/head'
-import { Suspense } from 'react'
 
 export default function Catalog() {
   const [products, setProducts] = useState([]);
@@ -135,7 +134,6 @@ export default function Catalog() {
   };
 
   return (
-    <Suspense>
     <main className="min-h-screen bg-white">
       <Head>
         <title>Catálogo | Electrónica Argentina</title>
@@ -316,6 +314,5 @@ export default function Catalog() {
         </div>
       </div>
     </main>
-    </Suspense>
   );
 }
