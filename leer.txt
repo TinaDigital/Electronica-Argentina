@@ -1,0 +1,14 @@
+Voy a necesitar tener cuenta de:
+
+- mongo db        // para la base de datos
+- Cloudinary         // para subir las fotos
+- resend         // para los mails
+
+Dependencias que instale:
+
+- bcryptjs // para hashear las contraseñas
+- connect-mongo // para conectar con mongo db
+- jsonwebtoken // para los tokens
+- next-auth // para el manejo de sesiones
+- react-slick // para las cards
+- crypto // para encriptar
