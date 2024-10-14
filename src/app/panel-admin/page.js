@@ -165,7 +165,7 @@ export default function Listado() {
   };
 
   return (
-    <Suspense fallback={<div>Cargando...</div>}>
+    <Suspense>
     <main className="min-h-screen bg-gray-100">
       <HeaderAdmin />
       <Toaster />

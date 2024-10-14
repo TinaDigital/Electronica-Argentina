@@ -135,7 +135,7 @@ export default function Catalog() {
   };
 
   return (
-    <Suspense fallback={<div>Cargando...</div>}>
+    <Suspense>
     <main className="min-h-screen bg-white">
       <Head>
         <title>Catálogo | Electrónica Argentina</title>
