@@ -10,7 +10,7 @@ import { Inter } from 'next/font/google';
 import HeaderAdmin from '../../components/layout/HeaderAdmin';
 import Swal from 'sweetalert2';
 import { Toaster, toast } from "react-hot-toast";
-
+import { Suspense } from 'react'
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Listado() {
@@ -165,6 +165,7 @@ export default function Listado() {
   };
 
   return (
+    <Suspense fallback={<div>Cargando...</div>}>
     <main className="min-h-screen bg-gray-100">
       <HeaderAdmin />
       <Toaster />
@@ -354,5 +355,6 @@ export default function Listado() {
         </div>
       </div>
     </main>
+    </Suspense>
   )
 }
