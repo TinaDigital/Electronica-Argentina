@@ -3,8 +3,7 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, Plus, Minus } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ChevronDown, Plus, Minus, ShoppingCart } from 'lucide-react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -154,11 +153,11 @@ const ProductDetail = ({ params }) => {
   const productImages = productInfo.images && productInfo.images.length > 0 ? productInfo.images : [];
 
   return (
-    <main className="container mx-auto px-4 py-8 lg:mt-10">
-      <div className="flex flex-col lg:flex-row gap-8">
+    <main className="container mx-auto px-4 lg:mt-10">
+      <div className="flex flex-col lg:flex-row gap-6">
         {/* Imágenes del producto */}
         <div className="lg:w-1/2">
-          <div className="relative w-full h-[450px] mb-4">
+          <div className="relative w-full h-[450px]">
             {productImages.length > 1 ? (
               <Slider ref={sliderRef} {...settings}>
                 {productImages.map((image, index) => (
@@ -206,12 +205,12 @@ const ProductDetail = ({ params }) => {
 
         {/* Detalles del producto */}
         <div className="lg:w-1/2">
-          <h2 className="text-sm uppercase text-gray-500 mb-2">{categoryName}</h2>
+          <h2 className="text-sm uppercase text-indigo-500 mb-2">{categoryName}</h2>
           <h1 className="text-3xl font-bold mb-4">{productInfo.name}</h1>
           <p className="text-lg mb-6">{productInfo.description}</p>
 
           {/* Secciones expandibles */}
-          <div className="border-t py-4">
+          <div className="border-t pt-4 pb-2">
             <button 
               onClick={() => setShowDetails(!showDetails)}
               className="flex justify-between items-center w-full text-left"
@@ -228,7 +227,7 @@ const ProductDetail = ({ params }) => {
           </div>
 
           {/* Botón de agregar al carrito y selector de cantidad */}
-          <div className="flex items-center mt-6">
+          <div className="flex items-center mt-4">
             {/* Selector de cantidad */}
             <div className="flex items-center mr-4">
               <button
@@ -256,52 +255,48 @@ const ProductDetail = ({ params }) => {
             </div>
 
             {/* Botón de agregar al carrito */}
-            <div 
-              className='flex-grow bg-gray-800 text-white py-3 rounded flex justify-center items-center cursor-pointer transition-all duration-300 hover:bg-gray-700'
-              onMouseEnter={() => setShowCross(true)}
-              onMouseLeave={() => setShowCross(false)}
-              onClick={() => {
-                handleAddToCart();
-                setIsCartOpen(true);
-              }}
-            >
-              <button className="flex gap-4 items-center">
-                Agregar al carrito
-                {showCross && <Plus className="w-5 h-5" />}
-              </button>
-            </div>
+            <button 
+                  onClick={() => {
+                    handleAddToCart();
+                    setIsCartOpen(true);
+                  }} 
+                  className="ml-4 flex-1 bg-gray-800 text-white py-2 px-6 rounded-md hover:bg-gray-700 transition duration-300 flex items-center justify-center"
+                >
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  Agregar al carrito
+            </button>
           </div>
         </div>
       </div>
 
       {/* Productos recomendados */}
-      <div className="mt-12">
-        <h2 className="text-2xl font-bold mb-6">Productos recomendados</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-2">
-          {recommendedProducts.slice(0, 3).map((product) => (
-            <div
-              key={product._id}
-              onClick={() => router.push(`/catalogo/${product.name}`)}
-              className="bg-white overflow-hidden cursor-pointer"
-            >
-              <div className="relative h-64 lg:h-[400px] bg-gray-100 flex items-center justify-center group">
-                <Image
-                  src={product.images[0]}
-                  alt={product.name}
-                  layout="fill"
-                  objectFit="contain"
-                  className="p-6"
-                />
+      <div className="mt-9 mb-9">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">Productos recomendados</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {recommendedProducts.slice(0, 3).map((product) => (
+              <div
+                key={product._id}
+                onClick={() => router.push(`/catalogo/${product.name}`)}
+                className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:scale-105"
+              >
+                <div className="relative h-48 bg-gray-100">
+                  <Image
+                    src={product.images[0]}
+                    alt={product.name}
+                    layout="fill"
+                    objectFit="contain"
+                    className="p-4"
+                  />
+                </div>
+                <div className="p-4">
+                  <p className="text-sm text-indigo-500">{categoryName}</p>
+                  <h3 className="text-lg font-semibold mb-2 text-gray-800">{product.name}</h3>
+                  <p className="text-gray-600 text-sm">{product.description.substring(0, 100)}...</p>
+                </div>
               </div>
-              <div className="p-6">
-                <p className="text-sm text-gray-600">{categoryName}</p>
-                <h2 className="text-xl font-semibold mb-2 text-gray-800">{product.name}</h2>
-                <p className="text-gray-600">{product.description.substring(0, 100)}...</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
       <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)}/>
     </main>
   );

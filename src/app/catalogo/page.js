@@ -139,7 +139,7 @@ export default function Catalog() {
         <title>Catálogo | Electrónica Argentina</title>
       </Head>
       {/* Banner Image */}
-      <div className="relative w-full h-52 md:h-80">
+      <div className="relative w-full h-[185px] md:h-80">
         {bannerImage && (
           <Image
             src={bannerImage}
@@ -150,60 +150,57 @@ export default function Catalog() {
           />
         )}
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white shadow-lg text-center">
-            Catálogo de Productos
+          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-300 text-center">
+            Productos
           </h1>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        {/* Search Bar and Sort */}
-        <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
-          <div className="relative w-full md:w-1/4 mb-4 md:mb-0">
-            <input
-              type="text"
-              placeholder="Buscar productos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full p-4 pr-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-900"
-            />
-            <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          </div>
-          <div className="relative flex items-center">
-            <span className="mr-4 text-gray-700">{`Total de productos: ${filteredProducts.length}`}</span>
-            <div>
-            <button
-              onClick={() => setShowSortOptions(!showSortOptions)}
-              className="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-900"
-            >
-              Ordenar por <ChevronDown className="inline-block ml-2" />
-            </button>
-            {showSortOptions && (
-              <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
-                <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                  <button onClick={() => { setSortOrder('asc'); setShowSortOptions(false); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">A-Z</button>
-                  <button onClick={() => { setSortOrder('desc'); setShowSortOptions(false); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">Z-A</button>
-                  <button onClick={() => { setSortOrder('newest'); setShowSortOptions(false); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">Más nuevos</button>
-                </div>
-              </div>
-            )}
+      <div className="container mx-auto px-4 py-3">
+        {/* Barra de búsqueda, filtros y ordenamiento */}
+        <div className="mb-4 md:mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center justify-between mb-2 md:mb-0 md:w-full">
+            <div className="relative w-full md:w-64 mr-2">
+              <input
+                type="text"
+                placeholder="Buscar productos..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full p-2 pr-8 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-900 text-sm"
+              />
+              <Search className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             </div>
+            <div className="relative ml-2 md:ml-auto">
+              <button
+                onClick={() => setShowSortOptions(!showSortOptions)}
+                className="px-3 py-1 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-900 flex items-center"
+              >
+                Ordenar <ChevronDown className="inline-block ml-1 w-4 h-4" />
+              </button>
+              {showSortOptions && (
+                <div className="absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                  <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                    <button onClick={() => { setSortOrder('asc'); setShowSortOptions(false); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">A-Z</button>
+                    <button onClick={() => { setSortOrder('desc'); setShowSortOptions(false); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">Z-A</button>
+                    <button onClick={() => { setSortOrder('newest'); setShowSortOptions(false); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">Más nuevos</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="md:hidden flex items-center justify-between mt-2 md:mt-0">
+            <button
+              className="mr-2 px-3 py-1 bg-gray-900 text-white rounded-md text-sm flex items-center"
+              onClick={() => setShowMobileCategories(!showMobileCategories)}
+            >
+              <Filter className="inline-block mr-1 w-4 h-4" /> Filtros
+            </button>
           </div>
         </div>
 
-        {/* Main Content */}
+        {/* Contenido principal */}
         <div className="flex flex-col md:flex-row">
-          {/* Mobile Categories Button */}
-          <div className="md:hidden mb-8">
-            <button
-              className="w-full px-4 py-2 bg-gray-900 text-white rounded-md"
-              onClick={() => setShowMobileCategories(!showMobileCategories)}
-            >
-              <Filter className="inline-block mr-2" /> Filtros
-            </button>
-          </div>
-
-          {/* Mobile Categories */}
+          {/* Categorías móviles */}
           <AnimatePresence>
             {showMobileCategories && (
               <motion.div
@@ -214,17 +211,17 @@ export default function Catalog() {
                 className="md:hidden mb-4 bg-white shadow-md rounded-md overflow-hidden"
               >
                 <div className="p-4">
-                  <h2 className="font-bold text-xl mb-4">Categorías</h2>
-                  <div className="flex flex-col">
+                  <h2 className="font-bold text-lg mb-2">Categorías</h2>
+                  <div className="flex flex-wrap">
                     {categories.map(category => (
-                      <label key={category._id} className="flex items-center mb-2">
+                      <label key={category._id} className="flex items-center mr-4 mb-2">
                         <input
                           type="checkbox"
-                          className="form-checkbox h-5 w-5 "
+                          className="form-checkbox h-4 w-4"
                           checked={selectedCategories.includes(category._id)}
                           onChange={() => handleCategoryChange(category._id)}
                         />
-                        <span className="ml-2 text-gray-700">{category.name}</span>
+                        <span className="ml-2 text-sm text-gray-700">{category.name}</span>
                       </label>
                     ))}
                   </div>
@@ -233,7 +230,7 @@ export default function Catalog() {
             )}
           </AnimatePresence>
 
-          {/* Desktop Categories */}
+          {/* Categorías de escritorio */}
           <aside className="hidden md:block w-1/4 pr-4">
             <div className="sticky top-4">
               <h2 className="font-bold text-xl mb-4">Categorías</h2>
@@ -255,14 +252,14 @@ export default function Catalog() {
 
           {/* Products Grid */}
       <div className="w-full md:w-3/4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-2">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:px-2">
           {currentProducts.map((product) => (
             <div
               key={product._id}
               onClick={() => handleProductClick(product.name)}
               className="bg-white overflow-hidden cursor-pointer"
             >
-              <div className="relative h-64 lg:h-[400px] bg-gray-100 flex items-center justify-center group">
+              <div className="relative h-48 sm:h-64 lg:h-[400px] bg-gray-100 flex items-center justify-center group">
                 
                 {product.images.length > 1 && (
                   <>
@@ -291,9 +288,9 @@ export default function Catalog() {
                   />
                 )}
               </div>
-              <div className="p-6">
-                <p className="text-sm text-gray-600">{getCategoryName(product.category)}</p>
-                <h2 className="text-xl font-semibold mb-2 text-gray-800">{product.name}</h2>
+              <div className="p-4 sm:p-6">
+                <p className="text-xs sm:text-sm text-gray-600">{getCategoryName(product.category)}</p>
+                <h2 className="text-sm sm:text-xl font-semibold mb-2 text-gray-800">{product.name}</h2>
               </div>
             </div>
           ))}
