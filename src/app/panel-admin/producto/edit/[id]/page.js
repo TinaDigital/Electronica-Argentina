@@ -109,12 +109,12 @@ export default function EditarProducto({ params }) {
         setProductImages(prevImages => [...prevImages, ...files]);
     }
 
-    function removeImage(index) {
+    const removeImage = useCallback((index) => {
         setProductImages(prevImages => prevImages.filter((_, i) => i !== index));
         if (selectedImage >= index && selectedImage > 0) {
             setSelectedImage(selectedImage - 1);
         }
-    }
+    }, [selectedImage]);
 
     function toggleDetails(e) {
         e.preventDefault();

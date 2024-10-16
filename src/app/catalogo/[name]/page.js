@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef, useContext, useCallback } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChevronDown, Plus, Minus, ShoppingCart } from 'lucide-react';
@@ -27,6 +27,18 @@ const ProductDetail = ({ params }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const sliderRef = useRef(null);
 
+  const fetchRecommendedProducts = useCallback(async (categoryId) => {
+    try {
+      const response = await fetch(`/api/products?category=${categoryId}&limit=3`);
+      if (!response.ok) {
+        throw new Error('Error al cargar productos recomendados.');
+      }
+      const data = await response.json();
+      setRecommendedProducts(data.filter(product => product._id !== productInfo._id));
+    } catch (err) {
+      console.error('Error fetching recommended products:', err);
+    }
+  }, [productInfo]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -66,19 +78,6 @@ const ProductDetail = ({ params }) => {
       fetchRecommendedProducts(productInfo.category);
     }
   }, [productInfo, categories, fetchRecommendedProducts]);
-
-  const fetchRecommendedProducts = async (categoryId) => {
-    try {
-      const response = await fetch(`/api/products?category=${categoryId}&limit=3`);
-      if (!response.ok) {
-        throw new Error('Error al cargar productos recomendados.');
-      }
-      const data = await response.json();
-      setRecommendedProducts(data.filter(product => product._id !== productInfo._id));
-    } catch (err) {
-      console.error('Error fetching recommended products:', err);
-    }
-  };
 
   const settings = {
     dots: false,
