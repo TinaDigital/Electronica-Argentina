@@ -54,8 +54,7 @@ export default function Home() {
                 src={background}
                 alt="Componentes electrónicos avanzados"
                 fill
-                objectFit="cover"
-                className="rounded-lg shadow-2xl"
+                className="rounded-lg shadow-2xl object-cover"
             />
             <div className="space-y-6 z-10">
               <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">

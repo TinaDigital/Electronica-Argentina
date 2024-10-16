@@ -80,13 +80,15 @@ export default function Catalog() {
       { threshold: 1 }
     );
 
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
+    const currentObserverTarget = observerTarget.current;
+
+    if (currentObserverTarget) {
+      observer.observe(currentObserverTarget);
     }
 
     return () => {
-      if (observerTarget.current) {
-        observer.unobserve(observerTarget.current);
+      if (currentObserverTarget) {
+        observer.unobserve(currentObserverTarget);
       }
     };
   }, []);
@@ -145,8 +147,8 @@ export default function Catalog() {
             src={bannerImage}
             alt="Catálogo Banner"
             fill
-            objectFit="cover"
-            className="brightness-75"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="brightness-75 object-cover"
           />
         )}
         <div className="absolute inset-0 flex items-center justify-center">
@@ -266,16 +268,16 @@ export default function Catalog() {
                   <Image
                   src={product.images[0]}
                   alt={product.name}
-                  layout="fill"
-                  objectFit="contain"
-                  className="group-hover:hidden"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="group-hover:hidden object-contain"
                   />
                   <Image
                     src={product.images[1]}
                     alt={product.name}
-                    layout="fill"
-                    objectFit="contain"
-                    className="hidden group-hover:block"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="hidden group-hover:block object-contain"
                   />
                   </>
                 )}
@@ -283,8 +285,9 @@ export default function Catalog() {
                   <Image
                     src={product.images[0]}
                     alt={product.name}
-                    layout="fill"
-                    objectFit="contain"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-contain"
                   />
                 )}
               </div>

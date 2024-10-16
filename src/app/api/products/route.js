@@ -3,10 +3,7 @@ import mongoose from "mongoose";
 import { uploadImage, deleteImage, updateImage } from '../../api/cloudinary';
 
 // Conexión a MongoDB
-mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URL);
 
 export async function POST(req) {
     try {

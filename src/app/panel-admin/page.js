@@ -20,7 +20,7 @@ export default function Listado() {
   const [isLoading, setIsLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [visibleProducts, setVisibleProducts] = useState(20)
-  const [bannerImage, setBannerImage] = useState('/default-banner.jpg')
+  const [bannerImage, setBannerImage] = useState('')
   const router = useRouter()
   const searchParams = useSearchParams()
   const observerTarget = useRef(null);
@@ -74,13 +74,15 @@ export default function Listado() {
       { threshold: 1 }
     );
 
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
+    const currentObserverTarget = observerTarget.current;
+
+    if (currentObserverTarget) {
+      observer.observe(currentObserverTarget);
     }
 
     return () => {
-      if (observerTarget.current) {
-        observer.unobserve(observerTarget.current);
+      if (currentObserverTarget) {
+        observer.unobserve(currentObserverTarget);
       }
     };
   }, []);
@@ -169,13 +171,15 @@ export default function Listado() {
       <HeaderAdmin />
       <Toaster />
       <div className="relative w-full h-64 md:h-80">
-        <Image
-          src={bannerImage}
-          alt="Admin Panel Banner"
-          fill
-          objectFit="cover"
-          className="brightness-75"
-        />
+        {bannerImage && (
+          <Image
+            src={bannerImage}
+            priority={true}
+            alt="Admin Panel Banner"
+            fill
+            className="brightness-75 object-cover"
+          />
+        )}
         <div className="absolute inset-0 flex items-center justify-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white text-center mr-4">
             Admin-Panel
@@ -323,7 +327,8 @@ export default function Listado() {
                       src={product.images[0]}
                       alt={product.name}
                       fill
-                      objectFit="contain"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-contain"
                     />
                   </div>
                   <div className="p-4 flex-1">

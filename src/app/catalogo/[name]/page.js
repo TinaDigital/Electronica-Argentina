@@ -65,7 +65,7 @@ const ProductDetail = ({ params }) => {
       setCategoryName(category ? category.name : 'Categoría desconocida');
       fetchRecommendedProducts(productInfo.category);
     }
-  }, [productInfo, categories]);
+  }, [productInfo, categories, fetchRecommendedProducts]);
 
   const fetchRecommendedProducts = async (categoryId) => {
     try {
@@ -284,8 +284,7 @@ const ProductDetail = ({ params }) => {
                     src={product.images[0]}
                     alt={product.name}
                     layout="fill"
-                    objectFit="contain"
-                    className="p-4"
+                    className="p-4 object-contain"
                   />
                 </div>
                 <div className="p-4">

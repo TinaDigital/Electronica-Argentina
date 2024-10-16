@@ -125,7 +125,7 @@ export default function AdminProductos() {
                 <X size={16} />
             </button>
         </div>
-    )), [productImages, selectedImage, handleThumbnailClick]);
+    )), [productImages, selectedImage, handleThumbnailClick, removeImage]);
 
     return (
         <main className="min-h-screen bg-gray-100">
