@@ -202,8 +202,7 @@ const ProductDetail = ({ params }) => {
                       src={image}
                       alt={`${productInfo.name} - Image ${index + 1}`}
                       fill
-                      objectFit="contain"
-                      loading="lazy"
+                      objectFit="contain"           
                     />
                   </div>
                 ))}
@@ -214,7 +213,6 @@ const ProductDetail = ({ params }) => {
                 alt={productInfo.name}
                 fill
                 objectFit="contain"
-                loading="lazy"
               />
             )}
           </div>
@@ -234,7 +232,6 @@ const ProductDetail = ({ params }) => {
                     alt={`${productInfo.name} - Image ${index + 1}`}
                     fill
                     objectFit="contain"
-                    loading="lazy"
                   />
                 </div>
               ))}
