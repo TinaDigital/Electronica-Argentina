@@ -7,6 +7,23 @@ import { Search, ChevronDown, Filter } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Head from 'next/head'
 
+const truncateText = (text, maxLength) => {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + '...';
+  }
+  return text;
+};
+
+const ProductSkeleton = () => (
+  <div className="bg-white overflow-hidden">
+    <div className="relative h-[160px] sm:h-64 lg:h-[300px] bg-gray-200 animate-pulse"></div>
+    <div className="mt-2">
+      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
+      <div className="h-3 bg-gray-200 rounded w-1/2 animate-pulse"></div>
+    </div>
+  </div>
+);
+
 export default function Catalog() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -253,64 +270,64 @@ export default function Catalog() {
           </aside>
 
           {/* Products Grid */}
-      <div className="w-full md:w-3/4">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:px-2">
-          {currentProducts.map((product) => (
-            <div
-              key={product._id}
-              onClick={() => handleProductClick(product.name)}
-              className="bg-white overflow-hidden cursor-pointer"
-            >
-              <div className="relative h-48 sm:h-64 lg:h-[400px] bg-gray-100 flex items-center justify-center group">
-                
-                {product.images.length > 1 && (
-                  <>
-                  <Image
-                  src={product.images[0]}
-                  alt={product.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="group-hover:hidden object-contain"
-                  />
-                  <Image
-                    src={product.images[1]}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="hidden group-hover:block object-contain"
-                  />
-                  </>
-                )}
-                {product.images.length === 1 && (
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-contain"
-                  />
-                )}
-              </div>
-              <div className="p-4 sm:p-6">
-                <p className="text-xs sm:text-sm text-gray-600">{getCategoryName(product.category)}</p>
-                <h2 className="text-sm sm:text-xl font-semibold mb-2 text-gray-800">{product.name}</h2>
-              </div>
+          <div className="w-full md:w-3/4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:px-2">
+              {isLoading
+                ? Array.from({ length: 12 }).map((_, index) => (
+                    <ProductSkeleton key={index} />
+                  ))
+                : currentProducts.map((product) => (
+                    <div
+                      key={product._id}
+                      onClick={() => handleProductClick(product.name)}
+                      className="bg-white overflow-hidden cursor-pointer"
+                    >
+                      <div className="relative h-[160px] sm:h-64 lg:h-[300px] bg-gray-100 flex items-center justify-center group">
+                        {product.images.length > 1 && (
+                          <>
+                            <Image
+                              src={product.images[0]}
+                              alt={product.name}
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              className="group-hover:hidden object-contain"
+                            />
+                            <Image
+                              src={product.images[1]}
+                              alt={product.name}
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              className="hidden group-hover:block object-contain"
+                            />
+                          </>
+                        )}
+                        {product.images.length === 1 && (
+                          <Image
+                            src={product.images[0]}
+                            alt={product.name}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className="object-contain"
+                          />
+                        )}
+                      </div>
+                      <div>
+                        <h2 className="mb-3 sm:mb-0 text-sm sm:text-xl font-semibold text-gray-800">
+                          {truncateText(product.name, 30)}
+                        </h2>
+                        <p className="hidden md:block text-xs sm:text-sm text-gray-600">
+                          {truncateText(product.description, 100)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
             </div>
-          ))}
-        </div>
-      </div>
-
-        {/* Infinite Scroll Observer */}
-        {currentProducts.length < sortedProducts.length && (
-          <div ref={observerTarget} className="h-10 mt-4"></div>
-          )}
-
-          {/* Loading indicator */}
-          {isLoading && (
-          <div className="flex justify-center items-center mt-8">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-black"></div>
           </div>
-        )}
+
+          {/* Infinite Scroll Observer */}
+          {currentProducts.length < sortedProducts.length && (
+            <div ref={observerTarget} className="h-10 mt-4"></div>
+          )}
         </div>
       </div>
     </main>

@@ -121,7 +121,13 @@ const Header = () => {
               <Cart isOpen={isCartOpen} onClose={toggleCart} />
             </div>
           </div>
-          <div className="lg:hidden">
+          <div className="flex items-center lg:hidden">
+            <button
+              onClick={toggleCart}
+              className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300 mr-2"
+            >
+              <ShoppingCart size={24} />
+            </button>
             <button
               onClick={toggleNavbar}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-[#0100a0] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#0100a0]"
@@ -144,9 +150,9 @@ const Header = () => {
             <div className="flex flex-col border-t border-gray-200">
               <div className="flex flex-col p-4 space-y-2">
                 {status === 'authenticated' ? (
-                  <div className="mb-4 flex flex-col items-center">
-                    <div className="flex justify-between w-full px-4 bg-gray-100 rounded-md">
-                      <p className="text-gray-600 py-3 text-base font-medium ">
+                  <div className="mb-4">
+                    <div className="flex flex-col bg-gray-100 rounded-md p-4">
+                      <p className="text-gray-600 text-base font-medium mb-2">
                         Hola, {userName}
                       </p>
                       <button
@@ -154,7 +160,7 @@ const Header = () => {
                           signOut({ callbackUrl: '/' });
                           setIsOpen(false);
                         }}
-                        className="text-black py-3 px-4 rounded-md text-base font-medium hover:border-b-2 hover:border-[#0100a0] transition-colors duración-300"
+                        className="bg-[#0100a0] text-white py-2 px-4 rounded-md text-base font-medium hover:bg-blue-700 transition-colors duration-300 w-full"
                       >
                         Cerrar sesión
                       </button>
@@ -163,7 +169,7 @@ const Header = () => {
                 ) : (
                   <Link
                     href="/account"
-                    className="text-gray-600 hover:bg-gray-100 hover:text-[#0100a0] py-3 px-4 rounded-md text-base font-medium transition-colors duración-300 flex items-center justify-between border border-gray-200"
+                    className="text-gray-600 hover:bg-gray-100 hover:text-[#0100a0] py-3 px-4 rounded-md text-base font-medium transition-colors duration-300 flex items-center justify-between border border-gray-200"
                     onClick={() => setIsOpen(false)}
                   >
                     <div className="flex items-center gap-2">
@@ -177,7 +183,7 @@ const Header = () => {
                   <Link
                     key={href}
                     href={href}
-                    className="text-gray-600 hover:bg-gray-100 hover:text-[#0100a0] py-3 px-4 rounded-md text-base font-medium transition-colors duración-300 flex items-center justify-between"
+                    className="text-gray-600 hover:bg-gray-100 hover:text-[#0100a0] py-3 px-4 rounded-md text-base font-medium transition-colors duration-300 flex items-center justify-between"
                     onClick={() => setIsOpen(false)}
                   >
                     {label}
@@ -187,23 +193,13 @@ const Header = () => {
                 {admin && (
                   <Link
                     href="/panel-admin"
-                    className="text-gray-600 hover:bg-violet-100 hover:text-violet-600 py-3 px-4 rounded-md text-base font-medium transition-colors duración-300 flex items-center justify-between"
+                    className="text-gray-600 hover:bg-violet-100 hover:text-violet-600 py-3 px-4 rounded-md text-base font-medium transition-colors duration-300 flex items-center justify-between"
                     onClick={() => setIsOpen(false)}
                   >
                     Admin
                     <ChevronRight size={20} />
                   </Link>
                 )}
-                <button
-                  onClick={toggleCart}
-                  className="text-gray-600 hover:bg-gray-100 hover:text-[#0100a0] py-3 px-4 rounded-md text-base font-medium transition-colors duración-300 flex items-center justify-between"
-                >
-                  <div className="flex items-center gap-2">
-                    <ShoppingCart size={20} />
-                    Carrito
-                  </div>
-                  <ChevronRight size={20} />
-                </button>
               </div>
             </div>
           </motion.div>

@@ -10,10 +10,47 @@ import "slick-carousel/slick/slick-theme.css";
 import { CartContext } from '../../../context/CartContext';
 import Cart from '../../../components/layout/Cart';
 
+const ProductSkeleton = () => (
+  <div className="container mx-auto px-4 lg:mt-10">
+    <div className="flex flex-col lg:flex-row gap-6">
+      <div className="lg:w-1/2">
+        <div className="relative w-full h-[450px] bg-gray-200 animate-pulse"></div>
+        <div className="grid grid-cols-6 gap-2 mt-4">
+          {[...Array(6)].map((_, index) => (
+            <div key={index} className="relative h-20 bg-gray-200 animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+      <div className="lg:w-1/2">
+        <div className="h-6 bg-gray-200 rounded w-1/4 mb-2 animate-pulse"></div>
+        <div className="h-8 bg-gray-200 rounded w-3/4 mb-4 animate-pulse"></div>
+        <div className="h-20 bg-gray-200 rounded w-full mb-6 animate-pulse"></div>
+        <div className="h-10 bg-gray-200 rounded w-full mb-4 animate-pulse"></div>
+        <div className="h-10 bg-gray-200 rounded w-full animate-pulse"></div>
+      </div>
+    </div>
+    <div className="mt-9 mb-9">
+      <div className="h-8 bg-gray-200 rounded w-1/3 mb-6 animate-pulse"></div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[...Array(3)].map((_, index) => (
+          <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="h-48 bg-gray-200 animate-pulse"></div>
+            <div className="p-4">
+              <div className="h-4 bg-gray-200 rounded w-1/2 mb-2 animate-pulse"></div>
+              <div className="h-6 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
+              <div className="h-4 bg-gray-200 rounded w-full animate-pulse"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 const ProductDetail = ({ params }) => {
   const { name } = params;
   const router = useRouter();
-  const { addToCart } = useContext(CartContext); // Usa el contexto aquí
+  const { addToCart } = useContext(CartContext);
   const [productInfo, setProductInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -118,7 +155,7 @@ const ProductDetail = ({ params }) => {
   };
 
   if (loading) {
-    return <div className="container mx-auto px-4 py-8">Cargando...</div>;
+    return <ProductSkeleton />;
   }
 
   if (error) {
@@ -272,7 +309,7 @@ const ProductDetail = ({ params }) => {
       <div className="mt-9 mb-9">
           <h2 className="text-2xl font-bold mb-6 text-gray-900">Productos recomendados</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recommendedProducts.slice(0, 3).map((product) => (
+            {recommendedProducts.length > 0 ? recommendedProducts.slice(0, 3).map((product) => (
               <div
                 key={product._id}
                 onClick={() => router.push(`/catalogo/${product.name}`)}
@@ -292,7 +329,18 @@ const ProductDetail = ({ params }) => {
                   <p className="text-gray-600 text-sm">{product.description.substring(0, 100)}...</p>
                 </div>
               </div>
-            ))}
+            )) : (
+              Array.from({ length: 3 }).map((_, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+                  <div className="h-48 bg-gray-200 animate-pulse"></div>
+                  <div className="p-4">
+                    <div className="h-4 bg-gray-200 rounded w-1/2 mb-2 animate-pulse"></div>
+                    <div className="h-6 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
+                    <div className="h-4 bg-gray-200 rounded w-full animate-pulse"></div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)}/>
