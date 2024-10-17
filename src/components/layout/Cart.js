@@ -48,7 +48,7 @@ export default function Cart({ isOpen, onClose }) {
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="relative h-full w-[88%] max-w-[400px] bg-white shadow-lg flex flex-col"
           >
-            <div className="p-6 bg-gray-800 text-white">
+            <div className="p-6 bg-gradient-to-r from-slate-900 to-slate-700 text-white">
               <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold">Tu Carrito</h2>
                 <button 
@@ -124,7 +124,7 @@ export default function Cart({ isOpen, onClose }) {
               <div className="p-6 bg-gray-50 border-t border-gray-200">
                 <button 
                   onClick={handleContinuePurchase}
-                  className="w-full bg-gray-800 text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+                  className="w-full bg-gradient-to-r from-slate-900 to-slate-700 text-white py-3 px-4 rounded-lg font-medium hover:bg-gradient-to-bl hover:from-slate-900 hover:to-slate-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
                 >
                   Continuar Compra
                 </button>
