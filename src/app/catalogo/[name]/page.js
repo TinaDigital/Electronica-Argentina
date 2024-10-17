@@ -202,7 +202,7 @@ const ProductDetail = ({ params }) => {
                       src={image}
                       alt={`${productInfo.name} - Image ${index + 1}`}
                       fill
-                      objectFit="contain"           
+                      objectFit="contain"
                     />
                   </div>
                 ))}
