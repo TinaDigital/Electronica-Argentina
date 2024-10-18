@@ -6,6 +6,11 @@ import conectores from '../../public/conector.jpg'
 import resistencia from '../../public/resitencia.webp'
 import displays from '../../public/capacitor.webp'
 
+export const metadata = {
+  title: 'Electronica Argentina',
+  description: 'Electronica Argentina',
+}
+
 const features = [
   {
     title: "Amplio Inventario",

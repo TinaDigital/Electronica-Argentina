@@ -16,7 +16,6 @@ const navLinks = [
   { href: '/catalogo', label: 'Catálogo' },
   { href: '/promociones', label: 'Promociones' },
   { href: '/novedades', label: 'Novedades' },
-  { href: '/distribuidores', label: 'Distribuidores' },
 ]
 
 const sideNavVariants = {
