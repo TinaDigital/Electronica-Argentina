@@ -6,7 +6,8 @@ import Whatsapp from '../components/icons/Whatsapp'
 import Footer from '../components/layout/Footer'
 import { Suspense } from 'react'
 import { Analytics } from "@vercel/analytics/react"
-
+import TabTitleChanger from '../components/Title'
+ 
 const dmSans = DM_Sans({ subsets: ['latin'] }); // Configurar la fuente
 
 export const metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`antialiased ${dmSans.className}`}> {/* Aplicar fuente */}
+        <TabTitleChanger />
         <AppProvider>
           <Header />
           <Whatsapp />

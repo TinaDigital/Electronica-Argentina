@@ -191,20 +191,22 @@ const ProductDetail = ({ params }) => {
 
   return (
     <>
-    <main className="container mx-auto px-4 lg:mt-10">
-      <div className="flex flex-col lg:flex-row gap-6">
+    <main className="container mx-auto px-4 md:mt-10">
+      <div className="flex flex-col md:flex-row gap-10">
         {/* Imágenes del producto */}
-        <div className="lg:w-1/2">
-          <div className="relative w-full h-[450px]">
+        <div className="md:w-1/2">
+          <div className="relative w-full h-[320px] md:h-[420px] lg:h-[500px]  rounded-lg overflow-hidden">
             {productImages.length > 1 ? (
               <Slider ref={sliderRef} {...settings}>
                 {productImages.map((image, index) => (
-                  <div key={index} className="relative w-full h-[450px]">
+                  	<div key={index} className="relative w-full h-[350px] md:h-[420px] lg:h-[500px] hover:scale-105 transition-transform duration-300">
                     <Image
                       src={image}
                       alt={`${productInfo.name} - Image ${index + 1}`}
                       fill
-                      objectFit="contain"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      style={{ objectFit: "contain" }}
+                      priority={index === 0}
                     />
                   </div>
                 ))}
@@ -214,7 +216,10 @@ const ProductDetail = ({ params }) => {
                 src={productImages[0] || '/placeholder-image.jpg'}
                 alt={productInfo.name}
                 fill
-                objectFit="contain"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                style={{ objectFit: "contain" }}
+                className="hover:scale-105 transition-transform duration-300"
+                priority
               />
             )}
           </div>
@@ -223,7 +228,7 @@ const ProductDetail = ({ params }) => {
               {productImages.map((image, index) => (
                 <div 
                   key={index} 
-                  className={`relative h-20 cursor-pointer ${selectedImage === index ? 'border-b-2 border-black' : ''}`}
+                  className={`relative h-20 cursor-pointer ${selectedImage === index ? 'border-b-2 border-black transition-all duration-100' : ''}`}
                   onClick={() => {
                     setSelectedImage(index);
                     sliderRef.current.slickGoTo(index);
@@ -233,7 +238,8 @@ const ProductDetail = ({ params }) => {
                     src={image}
                     alt={`${productInfo.name} - Image ${index + 1}`}
                     fill
-                    objectFit="contain"
+                    sizes="(max-width: 768px) 16vw, (max-width: 1200px) 8vw, 5vw"
+                    style={{ objectFit: "contain" }}
                   />
                 </div>
               ))}
@@ -242,53 +248,67 @@ const ProductDetail = ({ params }) => {
         </div>
 
         {/* Detalles del producto */}
-        <div className="lg:w-1/2">
-          <h2 className="text-sm uppercase text-indigo-500 mb-2">{categoryName}</h2>
-          <h1 className="text-3xl font-bold mb-4">{productInfo.name}</h1>
-          <p className="text-lg mb-6">{productInfo.description}</p>
+        <div className="md:w-1/2 space-y-8">
+          <div>
+            <h2 className="text-sm uppercase text-indigo-600 mb-3 font-semibold">{categoryName}</h2>
+            <h1 className="text-4xl font-bold mb-6">{productInfo.name}</h1>
+            <p className="text-xl mb-8 text-gray-700">{productInfo.description}</p>
+          </div>
 
           {/* Secciones expandibles */}
-          <div className="border-t pt-4 pb-2">
-            <button 
-              onClick={() => setShowDetails(!showDetails)}
-              className="flex justify-between items-center w-full text-left"
-            >
-              <span className="font-semibold">Características y Detalles</span>
-              <ChevronDown className="w-5 h-5" />
-            </button>
-            {showDetails && (
-              <div className="mt-4">
-                <h3 className="text-sm font-semibold mb-2">Detalles del Producto</h3>
-                <p className="text-lg whitespace-pre-wrap">{productInfo.details}</p>
+          <div className="border-t border-gray-200 pt-6">
+            <div className="flex space-x-4 mb-6">
+              <button 
+                onClick={() => setShowDetails(!showDetails)}
+                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${showDetails ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              >
+                Características
+              </button>
+              <button 
+                onClick={() => setShowDetails(!showDetails)}
+                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${!showDetails ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              >
+                Detalles
+              </button>
+            </div>
+            {showDetails ? (
+              <div className="mt-4 bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold mb-3">Características del Producto</h3>
+                <p className="text-lg text-gray-700 whitespace-pre-wrap">{productInfo.details}</p>
+              </div>
+            ) : (
+              <div className="mt-4 bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold mb-3">Detalles Técnicos</h3>
+                <p className="text-lg text-gray-700">Información técnica detallada del producto.</p>
               </div>
             )}
           </div>
 
           {/* Botón de agregar al carrito y selector de cantidad */}
-          <div className="flex items-center mt-4">
+          <div className="flex items-center mt-8">
             {/* Selector de cantidad */}
-            <div className="flex items-center mr-4">
+            <div className="flex items-center mr-6 bg-gray-100 rounded-full p-1">
               <button
                 onClick={decrement}
-                className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors"
+                className="w-10 h-10 flex items-center justify-center bg-white rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors"
                 aria-label="Disminuir cantidad"
               >
-                <Minus className="w-4 h-4 text-gray-600" />
+                <Minus className="w-5 h-5 text-gray-600" />
               </button>
               <input
                 type="text"
                 value={quantity}
                 onChange={handleQuantityChange}
-                className="w-16 text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 px-2 py-1 mx-2"
+                className="w-16 text-center bg-transparent font-semibold text-lg focus:outline-none"
                 min={1}
                 max={9999}
               />
               <button
                 onClick={increment}
-                className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors"
+                className="w-10 h-10 flex items-center justify-center bg-white rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors"
                 aria-label="Aumentar cantidad"
               >
-                <Plus className="w-4 h-4 text-gray-600" />
+                <Plus className="w-5 h-5 text-gray-600" />
               </button>
             </div>
 
@@ -298,9 +318,9 @@ const ProductDetail = ({ params }) => {
                     handleAddToCart();
                     setIsCartOpen(true);
                   }} 
-                  className="ml-4 flex-1 bg-gray-800 text-white py-2 px-6 rounded-md hover:bg-gray-700 transition duration-300 flex items-center justify-center"
+                  className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-full hover:bg-blue-700 transition duration-300 flex items-center justify-center text-lg font-semibold shadow-md"
                 >
-                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  <ShoppingCart className="w-6 h-6 mr-3" />
                   Agregar al carrito
             </button>
           </div>
@@ -308,36 +328,38 @@ const ProductDetail = ({ params }) => {
       </div>
 
       {/* Productos recomendados */}
-      <div className="mt-9 mb-9">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">Productos recomendados</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="mt-16 mb-12">
+          <h2 className="text-3xl font-bold mb-8 text-gray-900">También te podría interesar</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {recommendedProducts.length > 0 ? recommendedProducts.slice(0, 3).map((product) => (
               <div
                 key={product._id}
                 onClick={() => router.push(`/catalogo/${product.name}`)}
-                className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:scale-105"
+                className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
               >
-                <div className="relative h-48 bg-gray-100">
+                <div className="relative h-56 bg-gray-100">
                   <Image
                     src={product.images[0]}
                     alt={product.name}
-                    layout="fill"
-                    className="p-4 object-contain"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    style={{ objectFit: "contain" }}
+                    className="p-4"
                   />
                 </div>
-                <div className="p-4">
-                  <p className="text-sm text-indigo-500">{categoryName}</p>
-                  <h3 className="text-lg font-semibold mb-2 text-gray-800">{product.name}</h3>
-                  <p className="text-gray-600 text-sm">{product.description.substring(0, 100)}...</p>
+                <div className="p-6">
+                  <p className="text-sm font-semibold text-indigo-600 mb-2">{categoryName}</p>
+                  <h3 className="text-xl font-bold mb-3 text-gray-800">{product.name}</h3>
+                  <p className="text-gray-600">{product.description.substring(0, 100)}...</p>
                 </div>
               </div>
             )) : (
               Array.from({ length: 3 }).map((_, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
-                  <div className="h-48 bg-gray-200 animate-pulse"></div>
-                  <div className="p-4">
-                    <div className="h-4 bg-gray-200 rounded w-1/2 mb-2 animate-pulse"></div>
-                    <div className="h-6 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
+                <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden">
+                  <div className="h-56 bg-gray-200 animate-pulse"></div>
+                  <div className="p-6">
+                    <div className="h-4 bg-gray-200 rounded w-1/2 mb-3 animate-pulse"></div>
+                    <div className="h-6 bg-gray-200 rounded w-3/4 mb-3 animate-pulse"></div>
                     <div className="h-4 bg-gray-200 rounded w-full animate-pulse"></div>
                   </div>
                 </div>
