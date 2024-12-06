@@ -1,3 +1,5 @@
+
+
 import Image from "next/image"
 import Link from "next/link"
 import background from '../../public/background.jpg'

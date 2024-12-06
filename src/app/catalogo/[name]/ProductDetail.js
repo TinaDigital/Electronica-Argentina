@@ -147,7 +147,6 @@ const ProductDetail = ({ params }) => {
     const newItem = {
       id: productInfo._id,
       name: productInfo.name,
-      price: productInfo.price,
       quantity: quantity,
       image: productInfo.images[0]
     };
