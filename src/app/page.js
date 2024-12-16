@@ -1,163 +1,207 @@
+'use client'
 
+import React, { useState, useEffect } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { LampContainer } from '@/components/ui/lamp'
+import { motion } from 'framer-motion'
+import { TextGenerateEffect } from '@/components/ui/text-generate-effect'
+import Image from 'next/image'
+import variador from "../../public/variadores_familia.jpg"
 
-import Image from "next/image"
-import Link from "next/link"
-import background from '../../public/background.jpg'
-import semiconductores from '../../public/semiconductor.jpg'
-import conectores from '../../public/conector.jpg'
-import resistencia from '../../public/resitencia.webp'
-import displays from '../../public/capacitor.webp'
-
-export const metadata = {
-  title: 'Electronica Argentina',
-  description: 'Electronica Argentina',
-}
-
-const features = [
+const bannerItems = [
   {
-    title: "Amplio Inventario",
-    description: "Más de 50,000 componentes en stock",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-      </svg>
-    ),
+    title: "Fotocontroles Premium",
+    subtitle: "Control automático de iluminación",
+    image: variador,
   },
   {
-    title: "Envío Rápido",
-    description: "Entrega en 24-48 horas a todo el país",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-      </svg>
-    ),
+    title: "Cargadores Inteligentes", 
+    subtitle: "Soluciones de carga rápida USB",
+    image: variador,
   },
   {
-    title: "Soporte Técnico",
-    description: "Equipo de expertos a tu disposición",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-      </svg>
-    ),
+    title: "Transformadores de Alta Eficiencia",
+    subtitle: "Tecnología de conversión de energía", 
+    image: variador,
   },
-]
-
-const categories = [
-  { name: "Microcontroladores", image: semiconductores },
-  { name: "Sensores", image: conectores },
-  { name: "Conectores", image: resistencia },
-  { name: "Displays", image: displays },
+  {
+    title: "Variadores de Velocidad",
+    subtitle: "Control preciso de motores",
+    image: variador,
+  }
 ]
 
 export default function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % bannerItems.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const nextSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % bannerItems.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide - 1 + bannerItems.length) % bannerItems.length)
+  }
+
   return (
-    <div className="bg-gray-100">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-        <div className="container mx-auto px-6 py-24 md:px-12 lg:px-24">
-          <div className="grid gap-12 md:grid-cols-2 lg:items-center">
-            <Image
-                src={background}
-                alt="Componentes electrónicos avanzados"
+    <main className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-gray-50 to-gray-100">
+      {/* Banner más compacto */}
+      <div className="w-full relative h-[25vh] md:h-[40vh] overflow-hidden">
+        {bannerItems.map((item, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: index === currentSlide ? 1 : 0,
+              scale: index === currentSlide ? 1 : 0.95
+            }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 w-full h-full"
+          >
+            <div className="relative w-full h-full">
+              <Image
+                src={item.image}
+                alt={item.title}
                 fill
-                className="rounded-lg shadow-2xl object-cover"
+                style={{objectFit: 'cover'}}
+                priority={index === 0}
+              />
+            </div>
+          </motion.div>
+        ))}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+          {bannerItems.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                index === currentSlide ? 'bg-white w-6' : 'bg-white/50'
+              }`}
             />
-            <div className="space-y-6 z-10">
-              <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
-                Electronica Argentina
-              </h1>
-              <p className="text-xl md:text-2xl">
-                Tu proveedor líder en componentes electrónicos de vanguardia
-              </p>
-              <div className="flex space-x-4">
-                <Link
-                  href="/catalogo"
-                  className="rounded-full bg-white px-8 py-4 text-lg font-semibold text-blue-600 shadow-lg hover:bg-blue-50 transition duration-300"
-                >
-                  Explorar Catálogo
-                </Link>
-                <Link
-                  href="/contacto"
-                  className="rounded-full bg-blue-500 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-blue-400 transition duration-300"
-                >
-                  Contactar Ventas
-                </Link>
+          ))}
+        </div>
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors"
+          aria-label="Anterior slide"
+        >
+          <ChevronLeft className="w-5 h-5 text-white" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors"
+          aria-label="Siguiente slide"
+        >
+          <ChevronRight className="w-5 h-5 text-white" />
+        </button>
+      </div>
+
+      {/* Sección de Productos Destacados */}
+      <section className="w-full py-12 bg-white">
+        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Productos Destacados</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:px-2 max-w-7xl mx-auto">
+          {bannerItems.map((product) => (
+            <div
+              key={product.title}
+              className="bg-white overflow-hidden cursor-pointer"
+            >
+              <div className="relative h-[160px] sm:h-64 lg:h-[300px] bg-gray-100 flex items-center justify-center group">
+                <Image
+                  src={product.image}
+                  alt={product.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-contain"
+                />
+              </div>
+              <div>
+                <h2 className="mb-3 sm:mb-0 text-sm sm:text-xl font-semibold text-gray-800">
+                  {product.title}
+                </h2>
+                <p className="hidden md:block text-xs sm:text-sm text-gray-600">
+                  {product.subtitle}
+                </p>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-6">
-          <h2 className="mb-12 text-center text-3xl font-bold text-gray-900 sm:text-4xl">
-            ¿Por qué elegir Electronica Argentina?
-          </h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            {features.map((feature, index) => (
-              <div key={index} className="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                <div className="p-3 bg-blue-100 rounded-full mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </div>
-            ))}
-          </div>
+      {/* Título de la empresa con animación mejorada */}
+      <LampContainer className="w-full py-12 px-4">
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
+        >
+          ELECTRONICA ARGENTINA
+        </motion.h1>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="text-xl md:text-2xl text-center text-gray-600"
+        >
+          Innovación y calidad en productos electrónicos
+        </motion.p>
+      </LampContainer>
+
+      {/* Sección de Servicios con diseño mejorado */}
+      <section className="w-full py-16 px-4 bg-gray-50">
+        <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Nuestros Servicios</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          {[
+            { 
+              title: 'Diseño de circuitos',
+              description: 'Creamos circuitos personalizados adaptados a tus necesidades específicas.'
+            },
+            {
+              title: 'Armado de productos',
+              description: 'Ensamblamos productos electrónicos con precisión y calidad.'
+            },
+            {
+              title: 'Asesoría técnica',
+              description: 'Ofrecemos orientación experta para tus proyectos electrónicos.'
+            },
+            {
+              title: 'Soporte post-venta',
+              description: 'Brindamos asistencia continua después de tu compra.'
+            }
+          ].map((service, index) => (
+            <motion.div 
+              key={index} 
+              className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <h3 className="text-xl font-semibold mb-3 text-gray-800">{service.title}</h3>
+              <p className="text-gray-600">{service.description}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6">
-          <h2 className="mb-12 text-center text-3xl font-bold text-gray-900 sm:text-4xl">
-            Categorías Destacadas
-          </h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {categories.map((category, index) => (
-              <div key={index} className="group relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl">
-                <Image
-                  src={category.image}
-                  alt={category.name}
-                  width={300}
-                  height={200}
-                  className="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-xl font-semibold text-white mb-2">{category.name}</h3>
-                  <Link
-                    href={`/categoria/${category.name.toLowerCase()}`}
-                    className="inline-block w-full text-center rounded-full bg-white py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-100 group-hover:bg-blue-600 group-hover:text-white"
-                  >
-                    Ver productos
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* Sección de Contacto con diseño mejorado */}
+      <section className="w-full py-16 px-4 bg-gradient-to-b from-gray-100 to-gray-200">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-8 text-gray-800">Contáctanos</h2>
+          <TextGenerateEffect words="¿Tienes alguna pregunta o necesitas más información? No dudes en contactarnos." className="text-xl mb-8 text-gray-600" />
+          <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg transition-all duration-300 transform hover:scale-105 rounded-md shadow-lg hover:shadow-xl">
+            Enviar mensaje
+          </button>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-700 py-24 text-white">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
-            Potencia tu Negocio con TechnoComp
-          </h2>
-          <p className="mb-8 text-xl max-w-2xl mx-auto">
-            Únete a nuestra red de distribuidores y accede a precios mayoristas, soporte prioritario y las últimas innovaciones en componentes electrónicos.
-          </p>
-          <Link
-            href="/register"
-            className="inline-block rounded-full bg-white px-8 py-4 text-lg font-semibold text-blue-600 shadow-lg hover:bg-blue-50 transition duration-300"
-          >
-            Convertirse en Distribuidor
-          </Link>
-        </div>
-      </section>
-    </div>
+    </main>
   )
 }

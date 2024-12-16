@@ -12,3 +12,33 @@ Dependencias que instale:
 - next-auth // para el manejo de sesiones
 - react-slick // para las cards
 - crypto // para encriptar
+
+
+
+3d card effect
+
+card hover effect
+
+flip words
+
+hero highlight
+
+hover border gradient
+
+lamp effect 
+
+moving border
+
+text generate effect
+
+
+
+lens
+
+placeholder and vanish input
+
+signup form
+
+animated modal
+
+file upload
