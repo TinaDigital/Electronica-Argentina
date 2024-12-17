@@ -15,7 +15,7 @@ import { CartContext } from '../../context/CartContext'
 const navLinks = [
   { href: '/catalogo', label: 'Catálogo' },
   { href: '/promociones', label: 'Promociones' },
-  { href: '/novedades', label: 'Novedades' },
+  { href: '/nosotros', label: 'Nosotros' },
 ]
 
 const sideNavVariants = {

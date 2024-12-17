@@ -14,6 +14,7 @@ import banner03 from "../../public/banner03.jpg"
 import variador from "../../public/variador.png"
 import fuente from "../../public/fuente.png"
 import control from "../../public/control.png"
+import prueba from "../../public/prueba.jpg"
 
 
 const bannerItems = [
@@ -198,6 +199,12 @@ export default function Home() {
             className="w-full lg:w-1/2 lg:order-2"
           >
             <div className="relative w-full aspect-square max-w-md mx-auto bg-gray-200 rounded-lg mb-4">
+              <Image
+                src={prueba}
+                alt="Imagen de prueba"
+                fill
+                className="object-cover rounded-lg"
+              />
               <div className="absolute bottom-4 left-4">
                 <HoverBorderGradient>Ver Catálogo</HoverBorderGradient>
               </div>
