@@ -2,18 +2,19 @@
 
 import React, { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { LampContainer } from '@/components/ui/lamp'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TextGenerateEffect } from '@/components/ui/text-generate-effect'
+import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
+import { HeroHighlight, Highlight } from '@/components/ui/hero-highlight'
+import { HoverEffect } from '@/components/ui/card-hover-effect'
 import Image from 'next/image'
 import banner01 from "../../public/banner01.jpg"
 import banner02 from "../../public/banner02.jpg"
 import banner03 from "../../public/banner03.jpg"
-import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
 import variador from "../../public/variador.png"
 import fuente from "../../public/fuente.png"
 import control from "../../public/control.png"
-import { HeroHighlight, Highlight } from '@/components/ui/hero-highlight'
+
 
 const bannerItems = [
   {
@@ -38,13 +39,36 @@ const productos = [
   },
   {
     image: fuente,
-    title: "Fuente de Poder",
+    title: "Fuente de Poder", 
     subtitle: "Fuente de poder con 1000W",
   },
   {
     image: control,
     title: "Control Remoto",
     subtitle: "Control remoto con 1000W",
+  }
+]
+
+const servicios = [
+  { 
+    title: 'Diseño de circuitos',
+    description: 'Creamos circuitos personalizados adaptados a tus necesidades específicas.',
+    link: '#'
+  },
+  {
+    title: 'Armado de productos',
+    description: 'Ensamblamos productos electrónicos con precisión y calidad.',
+    link: '#'
+  },
+  {
+    title: 'Asesoría técnica',
+    description: 'Ofrecemos orientación experta para tus proyectos electrónicos.',
+    link: '#'
+  },
+  {
+    title: 'Soporte post-venta',
+    description: 'Brindamos asistencia continua después de tu compra.',
+    link: '#'
   }
 ]
 
@@ -148,7 +172,6 @@ export default function Home() {
           <ChevronRight className="w-5 h-5 text-white" />
         </motion.button>
       </motion.div>
-
       {/* Sección de título y catálogo */}
       <motion.div 
         variants={itemVariants}
@@ -159,7 +182,7 @@ export default function Home() {
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="w-full lg:w-1/2 lg:order-1"
+            className="w-full lg:w-1/2 lg:order-1 text-center lg:text-left"
           >
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
               ELECTRONICA <span className="text-sky-500">ARGENTINA</span>
@@ -189,7 +212,7 @@ export default function Home() {
         className="w-full py-12 bg-white"
       >
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Productos Destacados</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:px-2 max-w-7xl mx-auto px-2">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:px-2 max-w-7xl mx-auto px-4">
           {productos.map((product, index) => (
             <motion.div
               key={product.title}
@@ -227,40 +250,24 @@ export default function Home() {
         variants={itemVariants}
         className="w-full py-16 px-4 bg-gray-50"
       >
-        <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Nuestros Servicios</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {[
-            { 
-              title: 'Diseño de circuitos',
-              description: 'Creamos circuitos personalizados adaptados a tus necesidades específicas.'
-            },
-            {
-              title: 'Armado de productos',
-              description: 'Ensamblamos productos electrónicos con precisión y calidad.'
-            },
-            {
-              title: 'Asesoría técnica',
-              description: 'Ofrecemos orientación experta para tus proyectos electrónicos.'
-            },
-            {
-              title: 'Soporte post-venta',
-              description: 'Brindamos asistencia continua después de tu compra.'
-            }
-          ].map((service, index) => (
-            <motion.div 
-              key={index} 
-              className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
+        <div className="w-full flex justify-center">
+          <div className="relative inline-block text-center">
+            <motion.h2 
+              initial={{ opacity: 1 }}
+              className="text-3xl font-bold text-center mb-12 text-gray-800 relative pb-2 inline-block whitespace-nowrap"
             >
-              <h3 className="text-xl font-semibold mb-3 text-gray-800">{service.title}</h3>
-              <p className="text-gray-600">{service.description}</p>
-            </motion.div>
-          ))}
+              Nuestros Servicios
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+                className="absolute bottom-0 left-0 h-1 bg-sky-400"
+              />
+            </motion.h2>
+          </div>
         </div>
+        <HoverEffect items={servicios} className="max-w-7xl mx-auto" /> 
       </motion.section>
 
       {/* Sección de Contacto con diseño mejorado */}
@@ -275,15 +282,65 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="text-3xl font-bold mb-8 text-gray-800"
           >
-            Contáctanos
+            Contáctanos!
           </motion.h2>
           <TextGenerateEffect words="¿Tienes alguna pregunta o necesitas más información? No dudes en contactarnos." className="text-xl mb-8 text-gray-600" />
           <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg transition-all duration-300 transform rounded-md shadow-lg hover:shadow-xl"
+            whileHover={{
+              scale: 1.1,
+              transition: {
+                duration: 0.3,
+                yoyo: Infinity
+              }
+            }}
+            whileTap={{ scale: 0.9 }}
+            initial={{
+              background: "linear-gradient(45deg, #0ea5e9, #0284c7)",
+              boxShadow: "0 0 0 0 rgba(14, 165, 233, 0.7)"
+            }}
+            animate={{
+              boxShadow: [
+                "0 0 0 0 rgba(14, 165, 233, 0.7)",
+                "0 0 0 20px rgba(14, 165, 233, 0)",
+              ],
+              background: [
+                "linear-gradient(45deg, #0ea5e9, #0284c7)",
+                "linear-gradient(225deg, #0ea5e9, #0284c7)", 
+                "linear-gradient(405deg, #0ea5e9, #0284c7)",
+                "linear-gradient(45deg, #0ea5e9, #0284c7)",
+              ]
+            }}
+            transition={{
+              boxShadow: {
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse"
+              },
+              background: {
+                duration: 4,
+                repeat: Infinity,
+                ease: "linear"
+              }
+            }}
+            className="relative px-8 py-3 text-white text-lg rounded-md shadow-lg overflow-hidden"
           >
-            Enviar mensaje
+            <motion.span
+              initial={{ x: "-100%" }}
+              whileHover={{ x: "100%" }}
+              transition={{
+                duration: 1,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent"
+            />
+            <motion.span 
+              initial={{ y: 0 }}
+              whileHover={{ y: -5 }}
+              className="relative inline-block"
+            >
+              Enviar mensaje
+            </motion.span>
           </motion.button>
         </div>
       </motion.section>
