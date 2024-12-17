@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Send, Mail, CircleHelp } from 'lucide-react'
 import Link from 'next/link'
-import banner from '../../../public/banner1.webp'
+import banner from '../../../public/banner.jpg'
 
 export default function AccountPage() {
   return (

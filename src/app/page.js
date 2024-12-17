@@ -3,33 +3,69 @@
 import React, { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { LampContainer } from '@/components/ui/lamp'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { TextGenerateEffect } from '@/components/ui/text-generate-effect'
 import Image from 'next/image'
-import variador from "../../public/variadores_familia.jpg"
+import banner01 from "../../public/banner01.jpg"
+import banner02 from "../../public/banner02.jpg"
+import banner03 from "../../public/banner03.jpg"
+import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
+import variador from "../../public/variador.png"
+import fuente from "../../public/fuente.png"
+import control from "../../public/control.png"
+import { HeroHighlight, Highlight } from '@/components/ui/hero-highlight'
 
 const bannerItems = [
   {
-    title: "Fotocontroles Premium",
-    subtitle: "Control automático de iluminación",
-    image: variador,
+    image: banner01,
+    title: "Detector de Movimiento",
   },
   {
-    title: "Cargadores Inteligentes", 
-    subtitle: "Soluciones de carga rápida USB",
-    image: variador,
+    image: banner02, 
+    title: "Detector de Movimiento",
   },
   {
-    title: "Transformadores de Alta Eficiencia",
-    subtitle: "Tecnología de conversión de energía", 
-    image: variador,
-  },
-  {
-    title: "Variadores de Velocidad",
-    subtitle: "Control preciso de motores",
-    image: variador,
+    image: banner03,
+    title: "Cargador Modular USB A+ C CR",
   }
 ]
+
+const productos = [
+  {
+    image: variador,
+    title: "Variador de Voltaje",
+    subtitle: "Variador de voltaje con 1000W",
+  },
+  {
+    image: fuente,
+    title: "Fuente de Poder",
+    subtitle: "Fuente de poder con 1000W",
+  },
+  {
+    image: control,
+    title: "Control Remoto",
+    subtitle: "Control remoto con 1000W",
+  }
+]
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.3,
+      staggerChildren: 0.2
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1
+  }
+}
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -50,9 +86,17 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-gray-50 to-gray-100">
+    <motion.main 
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-gray-50 to-gray-100"
+    >
       {/* Banner más compacto */}
-      <div className="w-full relative h-[25vh] md:h-[40vh] overflow-hidden">
+      <motion.div 
+        variants={itemVariants}
+        className="w-full relative h-[25vh] md:h-[40vh] overflow-hidden"
+      >
         {bannerItems.map((item, index) => (
           <motion.div
             key={index}
@@ -77,8 +121,9 @@ export default function Home() {
         ))}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
           {bannerItems.map((_, index) => (
-            <button
+            <motion.button
               key={index}
+              whileHover={{ scale: 1.2 }}
               onClick={() => setCurrentSlide(index)}
               className={`w-2 h-2 rounded-full transition-all ${
                 index === currentSlide ? 'bg-white w-6' : 'bg-white/50'
@@ -86,29 +131,73 @@ export default function Home() {
             />
           ))}
         </div>
-        <button
+        <motion.button
+          whileHover={{ scale: 1.1 }}
           onClick={prevSlide}
           className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors"
           aria-label="Anterior slide"
         >
           <ChevronLeft className="w-5 h-5 text-white" />
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
           onClick={nextSlide}
           className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors"
           aria-label="Siguiente slide"
         >
           <ChevronRight className="w-5 h-5 text-white" />
-        </button>
-      </div>
+        </motion.button>
+      </motion.div>
+
+      {/* Sección de título y catálogo */}
+      <motion.div 
+        variants={itemVariants}
+        className="w-full max-w-7xl mx-auto py-12 px-4"
+      >
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+          <motion.div 
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="w-full lg:w-1/2 lg:order-1"
+          >
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">
+              ELECTRONICA <span className="text-sky-500">ARGENTINA</span>
+            </h1>
+            <HeroHighlight className="text-xl text-gray-600 mb-6">
+              <Highlight>Innovación y calidad</Highlight> en productos electrónicos, liderando el mercado nacional con soluciones tecnológicas de vanguardia.
+            </HeroHighlight>
+          </motion.div>
+          <motion.div 
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="w-full lg:w-1/2 lg:order-2"
+          >
+            <div className="relative w-full aspect-square max-w-md mx-auto bg-gray-200 rounded-lg mb-4">
+              <div className="absolute bottom-4 left-4">
+                <HoverBorderGradient>Ver Catálogo</HoverBorderGradient>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
 
       {/* Sección de Productos Destacados */}
-      <section className="w-full py-12 bg-white">
+      <motion.section 
+        variants={itemVariants}
+        className="w-full py-12 bg-white"
+      >
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Productos Destacados</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:px-2 max-w-7xl mx-auto">
-          {bannerItems.map((product) => (
-            <div
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:px-2 max-w-7xl mx-auto px-2">
+          {productos.map((product, index) => (
+            <motion.div
               key={product.title}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
               className="bg-white overflow-hidden cursor-pointer"
             >
               <div className="relative h-[160px] sm:h-64 lg:h-[300px] bg-gray-100 flex items-center justify-center group">
@@ -128,35 +217,16 @@ export default function Home() {
                   {product.subtitle}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </section>
-
-      {/* Título de la empresa con animación mejorada */}
-      <LampContainer className="w-full py-12 px-4">
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
-        >
-          ELECTRONICA ARGENTINA
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-xl md:text-2xl text-center text-gray-600"
-        >
-          Innovación y calidad en productos electrónicos
-        </motion.p>
-      </LampContainer>
+      </motion.section>
 
       {/* Sección de Servicios con diseño mejorado */}
-      <section className="w-full py-16 px-4 bg-gray-50">
+      <motion.section 
+        variants={itemVariants}
+        className="w-full py-16 px-4 bg-gray-50"
+      >
         <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Nuestros Servicios</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {[
@@ -184,24 +254,39 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ scale: 1.05 }}
             >
               <h3 className="text-xl font-semibold mb-3 text-gray-800">{service.title}</h3>
               <p className="text-gray-600">{service.description}</p>
             </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* Sección de Contacto con diseño mejorado */}
-      <section className="w-full py-16 px-4 bg-gradient-to-b from-gray-100 to-gray-200">
+      <motion.section 
+        variants={itemVariants}
+        className="w-full py-16 px-4 bg-gradient-to-b from-gray-100 to-gray-200"
+      >
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-8 text-gray-800">Contáctanos</h2>
+          <motion.h2 
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl font-bold mb-8 text-gray-800"
+          >
+            Contáctanos
+          </motion.h2>
           <TextGenerateEffect words="¿Tienes alguna pregunta o necesitas más información? No dudes en contactarnos." className="text-xl mb-8 text-gray-600" />
-          <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg transition-all duration-300 transform hover:scale-105 rounded-md shadow-lg hover:shadow-xl">
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg transition-all duration-300 transform rounded-md shadow-lg hover:shadow-xl"
+          >
             Enviar mensaje
-          </button>
+          </motion.button>
         </div>
-      </section>
-    </main>
+      </motion.section>
+    </motion.main>
   )
 }
