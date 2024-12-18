@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
-import logo from "../../../public/Logo-electronica-argentina.jpg"
+import logo from "../../../public/LOGO-ELECTRONICA ARGENTINA-02.png"
 import Cart from './Cart'
 import { useContext } from 'react'
 import { CartContext } from '../../context/CartContext'

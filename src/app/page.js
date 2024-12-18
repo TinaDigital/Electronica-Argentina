@@ -14,9 +14,9 @@ import banner03mobile from "../../public/BANNERS WEB_banner 03-mobile.jpg"
 import banner01desktop from "../../public/BANNERS WEB_banner 01-desktop.jpg"
 import banner02desktop from "../../public/BANNERS WEB_banner 02-desktop.jpg"
 import banner03desktop from "../../public/BANNERS WEB_banner 03-desktop.jpg"
-import banner01tablet from "../../public/BANNERS WEB_banner 01-tablet.jpg"
-import banner02tablet from "../../public/BANNERS WEB_banner 02-tablet.jpg"
-import banner03tablet from "../../public/BANNERS WEB_banner 03-tablet.jpg"
+import banner01laptop from "../../public/BANNERS WEB_banner 01-laptop.jpg"
+import banner02laptop from "../../public/BANNERS WEB_banner 02-laptop.jpg"
+import banner03laptop from "../../public/BANNERS WEB_banner 03-laptop.jpg"
 import variador from "../../public/variador.png"
 import fuente from "../../public/fuente.png"
 import control from "../../public/control.png"
@@ -26,19 +26,19 @@ import prueba from "../../public/prueba.jpg"
 const bannerItems = [
   {
     mobile: banner01mobile,
-    tablet: banner01tablet,
+    tablet: banner01laptop,
     desktop: banner01desktop,
     title: "Detector de Movimiento",
   },
   {
     mobile: banner02mobile,
-    tablet: banner02tablet,
+    tablet: banner02laptop,
     desktop: banner02desktop,
     title: "Detector de Movimiento",
   },
   {
     mobile: banner03mobile,
-    tablet: banner03tablet,
+    tablet: banner03laptop,
     desktop: banner03desktop,
     title: "Cargador Modular USB A+ C CR",
   }
@@ -107,6 +107,8 @@ const itemVariants = {
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [windowWidth, setWindowWidth] = useState(0)
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
 
   useEffect(() => {
     const handleResize = () => {
@@ -145,6 +147,31 @@ export default function Home() {
     }
   }
 
+  const handleTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientX)
+  }
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.touches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe) {
+      nextSlide()
+    }
+    if (isRightSwipe) {
+      prevSlide()
+    }
+
+    setTouchStart(null)
+    setTouchEnd(null)
+  }
+
   return (
     <motion.main 
       initial="hidden"
@@ -156,6 +183,9 @@ export default function Home() {
       <motion.div 
         variants={itemVariants}
         className="w-full relative lg:aspect-[55/9] aspect-[16/9] sm:aspect-[25/9] md:aspect-[35/9] overflow-hidden"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {bannerItems.map((item, index) => (
           <motion.div
@@ -191,22 +221,26 @@ export default function Home() {
             />
           ))}
         </div>
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors"
-          aria-label="Anterior slide"
-        >
-          <ChevronLeft className="w-5 h-5 text-white" />
-        </motion.button>
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors"
-          aria-label="Siguiente slide"
-        >
-          <ChevronRight className="w-5 h-5 text-white" />
-        </motion.button>
+        {windowWidth >= 768 && (
+          <>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              onClick={prevSlide}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors"
+              aria-label="Anterior slide"
+            >
+              <ChevronLeft className="w-5 h-5 text-white" />
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              onClick={nextSlide}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors"
+              aria-label="Siguiente slide"
+            >
+              <ChevronRight className="w-5 h-5 text-white" />
+            </motion.button>
+          </>
+        )}
       </motion.div>
       {/* Sección de título y catálogo */}
       <motion.div 

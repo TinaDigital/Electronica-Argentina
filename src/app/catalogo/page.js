@@ -1,7 +1,7 @@
 import Catalogo from "./Catalogo";
 
 export const metadata = {
-  title: 'Catálogo - Electronica Argentina',
+  title: 'Catálogo',
   description: 'Catálogo de productos de Electronica Argentina',
 }
 

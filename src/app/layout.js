@@ -14,6 +14,10 @@ export const metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  title: {
+    default: 'Electronica Argentina',
+    template: '%s | Electronica Argentina',
+  },
 }
 
 
