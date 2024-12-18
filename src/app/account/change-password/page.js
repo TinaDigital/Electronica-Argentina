@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import logo from '../../../../public/Logo-electronica-argentina.jpg';
+import logo from '../../../../public/LOGO-ELECTRONICA ARGENTINA-02.png';
 import Link from 'next/link';
 
 export default function ResetPasswordPage() {
@@ -66,7 +66,7 @@ export default function ResetPasswordPage() {
     <main className="relative min-h-screen flex md:items-center justify-center md:bg-gray-100">
         <div className="relative bg-white p-10 rounded-lg md:shadow-lg w-full max-w-lg z-10">
           <div className="flex justify-center mb-6">
-            <Image src={logo} alt="Logo Electrónica Argentina" width={150} height={150} />
+            <Image src={logo} alt="Logo Electrónica Argentina" width={200} height={200} />
           </div>
           <h1 className="text-3xl font-bold text-center mb-4 text-blue-600">Restablece tu contraseña</h1>
           <p className="text-center text-gray-600 mb-8">Ingresa tu nueva contraseña y confírmala</p>

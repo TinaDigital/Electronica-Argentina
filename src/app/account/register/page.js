@@ -3,7 +3,7 @@ import Link from "next/link";
 import {useState} from "react";
 import Image from 'next/image';
 import { Eye, EyeOff } from 'lucide-react';
-import logo from '../../../../public/Logo-electronica-argentina.jpg';
+import logo from '../../../../public/LOGO-ELECTRONICA ARGENTINA-02.png';
 
 
 export default function RegisterPage() {
@@ -46,7 +46,7 @@ export default function RegisterPage() {
     <main className="relative min-h-screen flex md:items-center justify-center md:bg-gray-100">
         <section className="relative bg-white p-10 rounded-lg md:shadow-lg w-full max-w-lg z-10">
           <header className="flex justify-center mb-6">
-            <Image src={logo} alt="Logo Electrónica Argentina" width={150} height={150} />
+            <Image src={logo} alt="Logo Electrónica Argentina" width={200} height={200} />
           </header>
           <h1 className="text-3xl font-bold text-center mb-4 text-blue-600">Registrate!</h1>
           <p className="text-center text-gray-600 mb-8">Crea tu cuenta para continuar</p>
