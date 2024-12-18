@@ -8,9 +8,15 @@ import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
 import { HeroHighlight, Highlight } from '@/components/ui/hero-highlight'
 import { HoverEffect } from '@/components/ui/card-hover-effect'
 import Image from 'next/image'
-import banner01 from "../../public/banner01.jpg"
-import banner02 from "../../public/banner02.jpg"
-import banner03 from "../../public/banner03.jpg"
+import banner01mobile from "../../public/BANNERS WEB_banner 01-mobile.jpg"
+import banner02mobile from "../../public/BANNERS WEB_banner 02-mobile.jpg"
+import banner03mobile from "../../public/BANNERS WEB_banner 03-mobile.jpg"
+import banner01desktop from "../../public/BANNERS WEB_banner 01-desktop.jpg"
+import banner02desktop from "../../public/BANNERS WEB_banner 02-desktop.jpg"
+import banner03desktop from "../../public/BANNERS WEB_banner 03-desktop.jpg"
+import banner01tablet from "../../public/BANNERS WEB_banner 01-tablet.jpg"
+import banner02tablet from "../../public/BANNERS WEB_banner 02-tablet.jpg"
+import banner03tablet from "../../public/BANNERS WEB_banner 03-tablet.jpg"
 import variador from "../../public/variador.png"
 import fuente from "../../public/fuente.png"
 import control from "../../public/control.png"
@@ -19,15 +25,21 @@ import prueba from "../../public/prueba.jpg"
 
 const bannerItems = [
   {
-    image: banner01,
+    mobile: banner01mobile,
+    tablet: banner01tablet,
+    desktop: banner01desktop,
     title: "Detector de Movimiento",
   },
   {
-    image: banner02, 
+    mobile: banner02mobile,
+    tablet: banner02tablet,
+    desktop: banner02desktop,
     title: "Detector de Movimiento",
   },
   {
-    image: banner03,
+    mobile: banner03mobile,
+    tablet: banner03tablet,
+    desktop: banner03desktop,
     title: "Cargador Modular USB A+ C CR",
   }
 ]
@@ -94,6 +106,19 @@ const itemVariants = {
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [windowWidth, setWindowWidth] = useState(0)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+    
+    // Set initial width
+    handleResize()
+    
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -110,6 +135,16 @@ export default function Home() {
     setCurrentSlide((prevSlide) => (prevSlide - 1 + bannerItems.length) % bannerItems.length)
   }
 
+  const getResponsiveImage = (item) => {
+    if (windowWidth < 768) {
+      return item.mobile
+    } else if (windowWidth < 1024) {
+      return item.tablet
+    } else {
+      return item.desktop
+    }
+  }
+
   return (
     <motion.main 
       initial="hidden"
@@ -120,7 +155,7 @@ export default function Home() {
       {/* Banner más compacto */}
       <motion.div 
         variants={itemVariants}
-        className="w-full relative h-[25vh] md:h-[40vh] overflow-hidden"
+        className="w-full relative lg:aspect-[55/9] aspect-[16/9] sm:aspect-[25/9] md:aspect-[35/9] overflow-hidden"
       >
         {bannerItems.map((item, index) => (
           <motion.div
@@ -135,7 +170,7 @@ export default function Home() {
           >
             <div className="relative w-full h-full">
               <Image
-                src={item.image}
+                src={getResponsiveImage(item)}
                 alt={item.title}
                 fill
                 style={{objectFit: 'cover'}}

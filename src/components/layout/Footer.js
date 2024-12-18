@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import logo from '../../../public/LOGO-TINA.png'
+import logo from '../../../public/LOGO TINA MKT-07.png'
 
 export default function Footer() {
   return (
@@ -13,7 +13,7 @@ export default function Footer() {
           <p className='text-[12px]'>
             Diseño y Programación: 
           </p>
-          <Image src={logo} alt="Logo Tina-Design" height={35} />
+          <Image src={logo} alt="Logo Tina-Design" height={50} />
         </div>
       </div>
     </footer>
