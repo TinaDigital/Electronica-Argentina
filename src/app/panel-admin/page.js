@@ -11,6 +11,7 @@ import HeaderAdmin from '../../components/layout/HeaderAdmin';
 import Swal from 'sweetalert2';
 import { Toaster, toast } from "react-hot-toast";
 
+
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Listado() {
@@ -265,7 +266,6 @@ export default function Listado() {
                       <label key={category._id} className="flex items-center mb-2">
                         <input
                           type="checkbox"
-                          className="form-checkbox h-5 w-5 "
                           checked={selectedCategories.includes(category._id)}
                           onChange={() => handleCategoryChange(category._id)}
                         />
