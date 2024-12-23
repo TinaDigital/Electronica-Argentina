@@ -7,7 +7,8 @@ export const TextGenerateEffect = ({
   words,
   className,
   filter = true,
-  duration = 0.5
+  duration = 0.7,
+  textColor = "text-black",
 }) => {
   const [scope, animate] = useAnimate();
   let wordsArray = words.split(" ");
@@ -28,7 +29,7 @@ export const TextGenerateEffect = ({
           return (
             (<motion.span
               key={word + idx}
-              className="dark:text-white text-black opacity-0"
+              className={`${textColor} opacity-0`}
               style={{
                 filter: filter ? "blur(10px)" : "none",
               }}>

@@ -45,6 +45,11 @@ export default function Header() {
 
   if (isAdminRoute()) return null;
 
+  const allNavLinks = admin ? [
+    ...navLinks,
+    { href: '/panel-admin', label: 'Admin' }
+  ] : navLinks;
+
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-md">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,7 +66,7 @@ export default function Header() {
 
           {/* Left section with navigation links */}
           <div className="hidden lg:flex items-center space-x-4">
-            {navLinks.map(({ href, label }) => (
+            {allNavLinks.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
@@ -88,7 +93,7 @@ export default function Header() {
                   onClick={toggleSearch}
                   className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300"
                 >
-                  <Search size={20} />
+                  <Search size={22} />
                 </button>
               </div>
               {status === 'authenticated' ? (
@@ -108,16 +113,16 @@ export default function Header() {
                   href="/account"
                   className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300"
                 >
-                  <User size={20} />
+                  <User size={22} />
                 </Link>
               )}
             </div>
-            <div className="ml-4 relative">
+            <div className="relative">
               <button
                 onClick={toggleCart}
                 className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300 relative"
               >
-                <ShoppingCart size={24} />
+                <ShoppingCart size={22} />
                 {cartItems.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
                     {cartItems.length}
@@ -133,13 +138,13 @@ export default function Header() {
               onClick={toggleSearch}
               className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300"
             >
-              <Search size={20} />
+              <Search size={22} />
             </button>
             <button
               onClick={toggleCart}
               className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300 relative"
             >
-              <ShoppingCart size={24} />
+              <ShoppingCart size={22} />
               {cartItems.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
                   {cartItems.length}
@@ -161,56 +166,47 @@ export default function Header() {
             exit="hidden"
           >
             <div className="flex flex-col p-4 space-y-2">
-              {navLinks.map(({ href, label }) => (
+              {status === 'authenticated' ? (
+                <div className="rounded-md font-bold flex justify-between w-full text-black py-2 px-4 rounded-md text-base font-medium transition-colors duration-300 flex items-center justify-end bg-gray-200 w-full">
+                  <div className="flex items-center gap-2">
+                      <span>Hola, {userName}</span>
+                  </div>
+                  <Link
+                    href="/account"
+                    className=""
+                    onClick={() => {
+                      signOut({ callbackUrl: '/' });
+                      setIsOpen(false);
+                    }}
+                  >
+                    <div className="flex items-center gap-2 border-b border-black">
+                      <span>Cerrar sesión</span>
+                    </div>
+                  </Link>
+                </div>
+              ) : (
+                <div className="rounded-md font-bold w-full">
+                  <Link
+                    href="/account"
+                    className="text-black py-2 rounded-md text-base font-medium transition-colors duration-300 flex items-center justify-center bg-gray-200 w-full"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <div className="flex items-center justify-center w-full">
+                      <User size={20} className="text-black" />
+                    </div>
+                  </Link>
+                </div>
+              )}
+              {allNavLinks.map(({ href, label }) => (
                 <Link
                   key={href}
                   href={href}
                   className="text-black font-bold hover:bg-gray-100 py-2 px-4 rounded-md text-base font-medium transition-colors duration-300 flex items-center justify-between"
                   onClick={() => setIsOpen(false)}
                 >
-                  <span>{label}</span>
-                  <ChevronRight size={20} className="text-black font-bold" />
+                  <span className="border-l border-black pl-2">{label}</span>
                 </Link>
               ))}
-              {admin && (
-                <Link
-                  href="/panel-admin"
-                  className="text-black font-bold hover:bg-gray-100 py-2 px-4 rounded-md text-base font-medium transition-colors duration-300 flex items-center justify-between"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span>Admin</span>
-                  <ChevronRight size={20} className="text-black font-bold" />
-                </Link>
-              )}
-              {status === 'authenticated' ? (
-                <div className="rounded-md font-bold flex justify-between border-t border-gray-200 pt-2">
-                  <p className="text-black text-base font-medium py-2 px-4">
-                    Hola, {userName}
-                  </p>
-                  <button
-                    onClick={() => {
-                      signOut({ callbackUrl: '/' });
-                      setIsOpen(false);
-                    }}
-                    className="bg-black text-white rounded-md text-sm font-medium hover:bg-gray-800 transition-colors duration-300 px-3"
-                  >
-                    Cerrar sesión
-                  </button>
-                </div>
-              ) : (
-                <div className="rounded-md font-bold">
-                <Link
-                  href="/account"
-                  className="text-black py-2 px-4 rounded-md text-base font-medium transition-colors duration-300 flex items-center justify-between"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <div className="flex items-center gap-2">
-                    <User size={20} className="text-black" />
-                  </div>
-                  <ChevronRight size={20} className="text-black" />
-                  </Link>
-                </div>
-              )}
             </div>
           </motion.div>
         )}

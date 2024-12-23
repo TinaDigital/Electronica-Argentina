@@ -403,9 +403,24 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="text-3xl font-bold mb-8 text-gray-800"
           >
-            Contáctanos!
+            ¡Contáctanos!
           </motion.h2>
-          <TextGenerateEffect words="¿Tienes alguna pregunta o necesitas más información? No dudes en contactarnos." className="text-xl mb-8 text-gray-600" />
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl md:text-2xl text-gray-900 font-bold"
+          >
+            ¿Tenés alguna pregunta o necesitás más información?
+          </motion.p>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-xl md:text-2xl mb-8 text-gray-900 font-bold"
+          >
+            No dudes en contactarnos
+          </motion.p>
           <motion.button 
             whileHover={{
               scale: 1.1,
