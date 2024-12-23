@@ -1,216 +1,220 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { TracingBeam } from '@/components/ui/tracing-beam'
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
-}
-
-const slideFromLeft = {
-  hidden: { opacity: 0, x: -100 },
-  visible: { opacity: 1, x: 0 }
-}
-
-const slideFromRight = {
-  hidden: { opacity: 0, x: 100 },
-  visible: { opacity: 1, x: 0 }
-}
+import Image from "next/image";
+import CountUp from "react-countup";
+import { motion } from "framer-motion";
+import { TypewriterEffectSmooth } from "../../components/ui/typewriter-effect";
+import Lampara from "../../../public/lampara1.png";
+import Lampara2 from "../../../public/lampara2.png";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 export default function AboutUs() {
+  const words = [
+    {
+      text: "¿Conocías",
+      className: "text-white font-serif",
+    },
+    {
+      text: "Electrónica",
+      className: "text-white font-serif",
+    },
+    {
+      text: "Argentina?",
+      className: "text-white font-serif",
+    },
+  ];
+
+  const testimonials = [
+    {
+      quote: "Atención personalizada y respuesta inmediata",
+      name: "Servicio al Cliente",
+      title: "Tu satisfacción es nuestra prioridad",
+    },
+    {
+      quote: "Equipo profesional altamente capacitado",
+      name: "Nuestro Personal",
+      title: "Experiencia y compromiso garantizado",
+    },
+    {
+      quote: "Productos que superan las expectativas",
+      name: "Calidad Superior",
+      title: "Excelencia en cada detalle",
+    },
+    {
+      quote: "Tecnología de última generación",
+      name: "Innovación",
+      title: "Eficiencia y precisión en la fabricación",
+    },
+  ];
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start bg-gray-100 text-gray-800">
-      {/* Hero Section */}
-      <section className="w-full py-12 sm:py-16 md:py-20 bg-gray-900 text-white">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <motion.h1
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            transition={{ duration: 0.8 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
-          >
-            ELECTRONICA ARGENTINA
-          </motion.h1>
-          <motion.p
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg sm:text-xl md:text-2xl"
-          >
-            Innovación y calidad en productos electrónicos desde 1980
-          </motion.p>
+    <motion.div
+      className="bg-gradient-to-r from-quartz-50 to-white text-black"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      {/* Título inicial con imagen de fondo */}
+      <div className="relative h-64 mb-12">
+        <div className="relative z-10 flex items-center justify-center h-full bg-[#004271]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center">
+            <TypewriterEffectSmooth words={words} />
+          </h1>
         </div>
-      </section>
-        {/* Misión y Visión */}
-        <section className="w-full py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={slideFromLeft}
-              transition={{ duration: 0.8 }}
-              className="mb-12"
-            >
-              <h2 className="text-2xl sm:text-3xl font-bold mb-6">Nuestra Misión</h2>
-              <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
-                <div className="w-full md:w-1/2 aspect-video relative bg-gray-200 rounded-lg overflow-hidden">
-                  <Image
-                    src="/placeholder.svg"
-                    alt="Misión de Electrónica Argentina"
-                    layout="fill"
-                    objectFit="cover"
-                    className="transition-transform duration-300 hover:scale-105"
-                  />
-                </div>
-                <p className="text-base sm:text-lg w-full md:w-1/2 mt-4 md:mt-0">
-                  Electrónica Argentina tiene como misión satisfacer las necesidades de sus clientes con una amplia variedad de productos electro-electrónicos, priorizando la calidad de los mismos en un nivel Premium, de acuerdo a los estándares aceptados por las políticas de la empresa; brindando también servicios integrales de armado y diseño de circuitos de acuerdo a los requerimientos de los clientes. Electrónica Argentina precautelara el patrimonio de sus propietarios; valorando el trabajo en equipo y el bienestar de sus recursos humanos; con el objetivo de constituirse en la empresa líder del rubro electro-electrónico en el mercado Argentino.
-                </p>
-              </div>
-            </motion.div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={slideFromRight}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-2xl sm:text-3xl font-bold mb-6">Nuestra Visión</h2>
-              <div className="flex flex-col md:flex-row-reverse items-center gap-6 sm:gap-8">
-                <div className="w-full md:w-1/2 aspect-video relative bg-gray-200 rounded-lg overflow-hidden">
-                  <Image
-                    src="/placeholder.svg"
-                    alt="Visión de Electrónica Argentina"
-                    layout="fill"
-                    objectFit="cover"
-                    className="transition-transform duration-300 hover:scale-105"
-                  />
-                </div>
-                <p className="text-base sm:text-lg w-full md:w-1/2 mt-4 md:mt-0">
-                  Constituirse en una de las empresas líderes en rubro electro-electrónico, en el mercado Argentino. Compitiendo en el mercado internacional latinoamericano, con productos de alta calidad y amplia variedad, que nos permita satisfacer las necesidades de nuestros clientes en lo que se refiere a productos y circuitos electrónicos, brindándoles un servicio integral y personalizado.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+      </div>
 
-        {/* Valores y Principios */}
-        <section className="w-full py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-gray-200">
-          <div className="max-w-4xl mx-auto">
-            <motion.h2
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-              className="text-2xl sm:text-3xl font-bold text-center mb-8"
-            >
-              Nuestros Valores y Principios
-            </motion.h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Sección de estadísticas */}
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 mb-12 sm:mb-20"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <StatItem number={30} text="Años de experiencia" />
+          <StatItem number={1994} text="Año de fundación" suffix="" />
+          <StatItem number={1000} text="Clientes satisfechos" />
+        </motion.div>
+
+        {/* Sección de Misión y Visión */}
+        <motion.div
+          className="flex flex-col items-center mb-12 lg:flex-row lg:items-start"
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="w-full lg:w-1/2 lg:pr-16 mb-8 lg:mb-0">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 sm:mb-6 font-sans relative inline-block">
+              Nuestra Misión
               <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={slideFromLeft}
-                transition={{ duration: 0.8 }}
-                className="bg-white p-6 rounded-lg shadow-md"
-              >
-                <h3 className="text-xl sm:text-2xl font-semibold mb-4">Clientes</h3>
-                <ul className="list-disc list-inside space-y-2 text-base sm:text-lg">
-                  <li>Atención al cliente premisa integral</li>
-                  <li>Seriedad en los negocios</li>
-                  <li>Solución a los problemas</li>
-                </ul>
-              </motion.div>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={slideFromRight}
-                transition={{ duration: 0.8 }}
-                className="bg-white p-6 rounded-lg shadow-md"
-              >
-                <h3 className="text-xl sm:text-2xl font-semibold mb-4">Recursos Humanos</h3>
-                <p className="text-base sm:text-lg">Recursos con valores y principios éticos</p>
-              </motion.div>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={slideFromLeft}
-                transition={{ duration: 0.8 }}
-                className="bg-white p-6 rounded-lg shadow-md"
-              >
-                <h3 className="text-xl sm:text-2xl font-semibold mb-4">Calidad</h3>
-                <p className="text-base sm:text-lg">Fabricar calidad en todos nuestros productos</p>
-              </motion.div>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={slideFromRight}
-                transition={{ duration: 0.8 }}
-                className="bg-white p-6 rounded-lg shadow-md"
-              >
-                <h3 className="text-xl sm:text-2xl font-semibold mb-4">Producción</h3>
-                <ul className="list-disc list-inside space-y-2 text-base sm:text-lg">
-                  <li>Automatización</li>
-                  <li>Eficiencia</li>
-                </ul>
-              </motion.div>
+                className="absolute left-0 -bottom-2 h-1 bg-[#004271]"
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+              />
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed font-light">
+              Electrónica Argentina tiene como misión satisfacer las necesidades
+              de sus clientes con una amplia variedad de productos
+              electro-electrónicos, priorizando la calidad de los mismos en un
+              nivel Premium, de acuerdo a los estándares aceptados por las
+              políticas de la empresa; brindando también servicios integrales de
+              armado y diseño de circuitos de acuerdo a los requerimientos de
+              los clientes. Electrónica Argentina precautelara el patrimonio de
+              sus propietarios; valorando el trabajo en equipo y el bienestar de
+              sus recursos humanos; con el objetivo de constituirse en la
+              empresa líder del rubro electro-electrónico en el mercado
+              Argentino.
+            </p>
+          </div>
+          <div className="w-full lg:w-1/2 lg:pl-16 flex justify-center items-center">
+            <div className="relative w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[340px] md:h-[340px]">
+              <Image
+                src={Lampara}
+                alt="Imagen de nuestra misión"
+                fill
+                sizes="(max-width: 640px) 220px, (max-width: 768px) 280px, 340px"
+                className="object-contain transform rotate-45"
+              />
             </div>
           </div>
-        </section>
-
-        {/* Calidad y Producción */}
-        <section className="w-full py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <motion.h2
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-              className="text-2xl sm:text-3xl font-bold text-center mb-8"
-            >
-              Calidad y Producción
-            </motion.h2>
-            <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
-              <motion.div 
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={slideFromLeft}
-                transition={{ duration: 0.8 }}
-                className="w-full md:w-1/2 aspect-video relative bg-gray-200 rounded-lg overflow-hidden"
-              >
-                <Image
-                  src="/placeholder.svg"
-                  alt="Calidad y Producción en Electrónica Argentina"
-                  layout="fill"
-                  objectFit="cover"
-                  className="transition-transform duration-300 hover:scale-105"
-                />
-              </motion.div>
-              <motion.p
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={slideFromRight}
-                transition={{ duration: 0.8 }}
-                className="text-base sm:text-lg w-full md:w-1/2 mt-4 md:mt-0"
-              >
-                En Electrónica Argentina, nos comprometemos a fabricar productos de la más alta calidad, implementando procesos de automatización avanzados y buscando constantemente mejorar nuestra eficiencia operativa.
-              </motion.p>
+        </motion.div>
+        <motion.div
+          className="flex flex-col items-center mt-12 sm:mt-20 lg:flex-row-reverse lg:items-start "
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="w-full lg:w-1/2 lg:pr-10">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 sm:mb-6 font-sans relative inline-block">
+              Nuestra Visión
+              <motion.div
+                className="absolute left-0 -bottom-2 h-1 bg-[#004271]"
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+              />
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl leading-relaxed font-light">
+              Constituirse en una de las empresas líderes en rubro
+              electro-electrónico, en el mercado Argentino. Compitiendo en el
+              mercado internacional latinoamericano, con productos de alta
+              calidad y amplia variedad, que nos permita satisfacer las
+              necesidades de nuestros clientes en lo que se refiere a productos
+              y circuitos electrónicos, brindándoles un servicio integral y
+              personalizado.
+            </p>
+          </div>
+          <div className="w-full lg:w-1/2 mb-8 lg:mb-0 flex justify-center items-center mt-10 sm:mt-0">
+            <div className="relative w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[340px] md:h-[340px]">
+              <Image
+                src={Lampara2}
+                alt="Imagen de nuestra visión"
+                fill
+                sizes="(max-width: 640px) 220px, (max-width: 768px) 280px, 340px"
+                className="object-contain transform -rotate-45"
+              />
             </div>
-          </div>  
-        </section>
-    </main>
-  )
+          </div>
+        </motion.div>
+
+        {/* Sección de Valores y Principios */}
+        <div className="h-[40vh] md:h-[45vh] w-full dark:bg-black bg-white dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex flex-col items-center justify-center overflow-hidden mb-20">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 text-[#004271]">
+            Nuestros Valores y Principios
+          </h2>
+          <InfiniteMovingCards items={testimonials} direction="right" speed="slow" />
+        </div>
+
+        {/* Sección de Ubicación */}
+        <motion.div 
+          className="w-full mb-20"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 text-[#004271]">
+            Encontranos Aqui
+          </h2>
+          <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-xl">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.0168878895468!2d-58.38375908417444!3d-34.60373446500755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4aa9f0a6da5edb%3A0x11bead4e234e558b!2sObelisco!5e0!3m2!1ses!2sar!4v1635959481548!5m2!1ses!2sar"
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen="" 
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+          <div className="mt-8 text-center">
+            <h3 className="text-xl font-semibold text-[#004271] mb-2">Electrónica Argentina</h3>
+            <p className="text-lg text-gray-600">Av. Corrientes 1234</p>
+            <p className="text-lg text-gray-600">Ciudad Autónoma de Buenos Aires</p>
+            <p className="text-lg text-gray-600">Argentina</p>
+            <p className="text-lg text-[#004271] font-semibold mt-4">Tel: (011) 4567-8900</p>
+          </div>
+        </motion.div>
+
+      </div>
+    </motion.div>
+  );
+}
+
+function StatItem({ number, text, suffix = "+" }) {
+  return (
+    <motion.div
+      className="text-center mb-8 lg:mb-20"
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4 text-[#004271] font-mono">
+        <CountUp end={number} duration={2.5} suffix={suffix} />
+      </h3>
+      <p className="text-lg sm:text-xl md:text-2xl font-bold text-[#004271] font-mono">
+        {text}
+      </p>
+    </motion.div>
+  );
 }

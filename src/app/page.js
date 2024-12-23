@@ -20,7 +20,7 @@ import banner03laptop from "../../public/BANNERS WEB_banner 03-laptop.jpg"
 import variador from "../../public/variador.png"
 import fuente from "../../public/fuente.png"
 import control from "../../public/control.png"
-import prueba from "../../public/prueba.jpg"
+import prueba from "../../public/BANNERS WEB_banner 1x1.jpg"
 
 
 const bannerItems = [
@@ -109,6 +109,7 @@ export default function Home() {
   const [windowWidth, setWindowWidth] = useState(0)
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
+  const [direction, setDirection] = useState(0)
 
   useEffect(() => {
     const handleResize = () => {
@@ -124,16 +125,19 @@ export default function Home() {
 
   useEffect(() => {
     const timer = setInterval(() => {
+      setDirection(1)
       setCurrentSlide((prevSlide) => (prevSlide + 1) % bannerItems.length)
     }, 5000)
     return () => clearInterval(timer)
   }, [])
 
   const nextSlide = () => {
+    setDirection(1)
     setCurrentSlide((prevSlide) => (prevSlide + 1) % bannerItems.length)
   }
 
   const prevSlide = () => {
+    setDirection(-1)
     setCurrentSlide((prevSlide) => (prevSlide - 1 + bannerItems.length) % bannerItems.length)
   }
 
@@ -162,14 +166,33 @@ export default function Home() {
     const isRightSwipe = distance < -50
 
     if (isLeftSwipe) {
+      setDirection(1)
       nextSlide()
     }
     if (isRightSwipe) {
+      setDirection(-1)
       prevSlide()
     }
 
     setTouchStart(null)
     setTouchEnd(null)
+  }
+
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? '100%' : '-100%',
+      opacity: 1
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction) => ({
+      zIndex: 0,
+      x: direction < 0 ? '100%' : '-100%',
+      opacity: 1
+    })
   }
 
   return (
@@ -187,34 +210,40 @@ export default function Home() {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {bannerItems.map((item, index) => (
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.div
-            key={index}
-            initial={{ opacity: 0 }}
-            animate={{ 
-              opacity: index === currentSlide ? 1 : 0,
-              scale: index === currentSlide ? 1 : 0.95
+            key={currentSlide}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "tween", duration: 0.5 },
+              opacity: { duration: 0.2 }
             }}
-            transition={{ duration: 0.5 }}
             className="absolute inset-0 w-full h-full"
           >
             <div className="relative w-full h-full">
               <Image
-                src={getResponsiveImage(item)}
-                alt={item.title}
+                src={getResponsiveImage(bannerItems[currentSlide])}
+                alt={bannerItems[currentSlide].title}
                 fill
                 style={{objectFit: 'cover'}}
-                priority={index === 0}
+                priority={currentSlide === 0}
               />
             </div>
           </motion.div>
-        ))}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+        </AnimatePresence>
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
           {bannerItems.map((_, index) => (
             <motion.button
               key={index}
               whileHover={{ scale: 1.2 }}
-              onClick={() => setCurrentSlide(index)}
+              onClick={() => {
+                setDirection(index > currentSlide ? 1 : -1)
+                setCurrentSlide(index)
+              }}
               className={`w-2 h-2 rounded-full transition-all ${
                 index === currentSlide ? 'bg-white w-6' : 'bg-white/50'
               }`}
@@ -226,7 +255,7 @@ export default function Home() {
             <motion.button
               whileHover={{ scale: 1.1 }}
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors z-10"
               aria-label="Anterior slide"
             >
               <ChevronLeft className="w-5 h-5 text-white" />
@@ -234,7 +263,7 @@ export default function Home() {
             <motion.button
               whileHover={{ scale: 1.1 }}
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/20 backdrop-blur-sm p-2 rounded-full hover:bg-black/40 transition-colors z-10"
               aria-label="Siguiente slide"
             >
               <ChevronRight className="w-5 h-5 text-white" />
@@ -287,7 +316,23 @@ export default function Home() {
         variants={itemVariants}
         className="w-full py-12 bg-white"
       >
-        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Productos Destacados</h2>
+        <div className="w-full flex justify-center">
+          <div className="relative inline-block text-center">
+            <motion.h2 
+              initial={{ opacity: 1 }}
+              className="text-2xl xsm:text-3xl font-bold text-center mb-8 text-gray-800 relative pb-2 inline-block whitespace-nowrap"
+            >
+              Productos Destacados
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+                className="absolute bottom-0 left-0 h-1 bg-sky-400"
+              />
+            </motion.h2>
+          </div>
+        </div>
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:px-2 max-w-7xl mx-auto px-4">
           {productos.map((product, index) => (
             <motion.div
@@ -330,7 +375,7 @@ export default function Home() {
           <div className="relative inline-block text-center">
             <motion.h2 
               initial={{ opacity: 1 }}
-              className="text-3xl font-bold text-center mb-12 text-gray-800 relative pb-2 inline-block whitespace-nowrap"
+              className="text-2xl xsm:text-3xl font-bold text-center mb-8 text-gray-800 relative pb-2 inline-block whitespace-nowrap"
             >
               Nuestros Servicios
               <motion.div 

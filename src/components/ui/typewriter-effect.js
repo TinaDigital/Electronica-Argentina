@@ -47,6 +47,7 @@ export const TypewriterEffect = ({
                   {char}
                 </motion.span>
               ))}
+              <span className="inline-block">&nbsp;</span> {/* Añade un espacio después de cada palabra */}
             </div>)
           );
         })}
@@ -73,7 +74,7 @@ export const TypewriterEffect = ({
           repeatType: "reverse",
         }}
         className={cn(
-          "inline-block rounded-sm w-[4px] h-4 md:h-6 lg:h-10 bg-blue-500",
+          "inline-block rounded-sm w-[4px] h-4 md:h-6 lg:h-10 bg-white",
           cursorClassName
         )}></motion.span>
     </div>)
@@ -97,7 +98,7 @@ export const TypewriterEffectSmooth = ({
       (<div>
         {wordsArray.map((word, idx) => {
           return (
-            (<div key={`word-${idx}`} className="inline-block">
+            (<div key={`word-${idx}`} className="inline-block mr-1">
               {word.text.map((char, index) => (
                 <span
                   key={`char-${index}`}
@@ -105,6 +106,7 @@ export const TypewriterEffectSmooth = ({
                   {char}
                 </span>
               ))}
+              <span className="inline-block">&nbsp;</span> {/* Añade un espacio después de cada palabra */}
             </div>)
           );
         })}
@@ -149,7 +151,7 @@ export const TypewriterEffectSmooth = ({
           repeatType: "reverse",
         }}
         className={cn(
-          "block rounded-sm w-[4px]  h-4 sm:h-6 xl:h-12 bg-blue-500",
+          "block rounded-sm w-[4px]  h-4 sm:h-6 xl:h-12 bg-white",
           cursorClassName
         )}></motion.span>
     </div>)

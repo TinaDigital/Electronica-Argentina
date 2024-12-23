@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X, User, ChevronRight, ShoppingCart } from 'lucide-react'
+import { Menu, X, User, ChevronRight, ShoppingCart, Search } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
@@ -11,10 +11,10 @@ import logo from "../../../public/LOGO-ELECTRONICA ARGENTINA-02.png"
 import Cart from './Cart'
 import { useContext } from 'react'
 import { CartContext } from '../../context/CartContext'
+import Buscador from './Buscador'
 
 const navLinks = [
   { href: '/catalogo', label: 'Catálogo' },
-  { href: '/promociones', label: 'Promociones' },
   { href: '/nosotros', label: 'Nosotros' },
 ]
 
@@ -32,6 +32,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [admin, setAdmin] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const { cartItems } = useContext(CartContext);
   
   useEffect(() => {
@@ -40,6 +41,7 @@ export default function Header() {
 
   const toggleNavbar = () => setIsOpen(!isOpen)
   const toggleCart = () => setIsCartOpen(!isCartOpen)
+  const toggleSearch = () => setIsSearchOpen(!isSearchOpen)
 
   if (isAdminRoute()) return null;
 
@@ -47,38 +49,48 @@ export default function Header() {
     <nav className="sticky top-0 z-50 bg-white shadow-md">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0">
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden">
+            <button
+              onClick={toggleNavbar}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-[#0100a0] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#0100a0]"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+
+          {/* Left section with navigation links */}
+          <div className="hidden lg:flex items-center space-x-4">
+            {navLinks.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="text-gray-600 px-3 py-1 rounded-md text-sm font-medium relative group"
+              >
+                {label}
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#42A3FF] scale-x-0 transition-transform duration-200 group-hover:scale-x-100 origin-center"></span>
+              </Link>
+            ))}
+          </div>
+
+          {/* Center logo */}
+          <div className="flex-1 flex justify-center">
             <Link href="/" className="text-xl font-bold text-[#0100a0]">
               <Image src={logo} alt="Logo Electronica Argentina" height={50} width={150} />
             </Link>
           </div>
-          {/* Desktop Navigation - Unchanged */}
-          <div className="hidden lg:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              {navLinks.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="text-gray-600 px-3 py-1 rounded-md text-sm font-medium relative group"
-                >
-                  {label}
-                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#42A3FF] scale-x-0 transition-transform duration-200 group-hover:scale-x-100 origin-center"></span>
-                </Link>
-              ))}
-              {admin && (
-                <Link
-                  href="/panel-admin"
-                  className="text-gray-600 px-3 py-1 rounded-md text-sm font-medium relative group"
-                >
-                  Admin
-                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#CC42FF] scale-x-0 transition-transform duration-300 group-hover:scale-x-100 origin-center"></span>
-                </Link>
-              )}
-            </div>
-          </div>
-          {/* Desktop User Menu and Cart - Updated with cart counter */}
+
+          {/* Right section with user menu and cart */}
           <div className="hidden lg:flex items-center">
             <div className="ml-4 flex items-center md:ml-6">
+              <div className="relative w-full max-w-xs">
+                <button 
+                  onClick={toggleSearch}
+                  className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300"
+                >
+                  <Search size={20} />
+                </button>
+              </div>
               {status === 'authenticated' ? (
                 <>
                   <p className="text-gray-600 px-3 py-2 rounded-md text-sm font-medium">
@@ -94,10 +106,9 @@ export default function Header() {
               ) : (
                 <Link
                   href="/account"
-                  className="text-gray-600 hover:text-white hover:bg-[#42A3FF] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 flex items-center"
+                  className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300"
                 >
-                  Cuenta
-                  <User className="ml-2" size={20} />
+                  <User size={20} />
                 </Link>
               )}
             </div>
@@ -115,11 +126,18 @@ export default function Header() {
               </button>
             </div>
           </div>
-          {/* Mobile Navigation Toggle and Cart */}
+
+          {/* Mobile Search and Cart */}
           <div className="flex items-center lg:hidden">
+            <button 
+              onClick={toggleSearch}
+              className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300"
+            >
+              <Search size={20} />
+            </button>
             <button
               onClick={toggleCart}
-              className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300 mr-2 relative"
+              className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300 relative"
             >
               <ShoppingCart size={24} />
               {cartItems.length > 0 && (
@@ -127,12 +145,6 @@ export default function Header() {
                   {cartItems.length}
                 </span>
               )}
-            </button>
-            <button
-              onClick={toggleNavbar}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-[#0100a0] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#0100a0]"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
@@ -193,7 +205,6 @@ export default function Header() {
                   onClick={() => setIsOpen(false)}
                 >
                   <div className="flex items-center gap-2">
-                    <span>Cuenta</span>
                     <User size={20} className="text-black" />
                   </div>
                   <ChevronRight size={20} className="text-black" />
@@ -205,6 +216,7 @@ export default function Header() {
         )}
       </AnimatePresence>
       <Cart isOpen={isCartOpen} onClose={toggleCart} />
+      <Buscador isSearchOpen={isSearchOpen} closeSearch={toggleSearch} />
     </nav>
   )
 }

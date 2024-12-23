@@ -2,8 +2,12 @@ import { Product } from "../../../models/Product";
 import mongoose from "mongoose";
 import { uploadImage, deleteImage, updateImage } from '../../api/cloudinary';
 
-// Conexión a MongoDB
-mongoose.connect(process.env.MONGO_URL);
+// Conexión a MongoDB - versión simplificada
+try {
+    await mongoose.connect(process.env.MONGO_URL);
+} catch (error) {
+    console.error('Error de conexión a MongoDB:', error);
+}
 
 export async function POST(req) {
     try {
@@ -36,8 +40,22 @@ export async function POST(req) {
 export async function GET(req) {
     try {
         const { searchParams } = new URL(req.url);
-        const id = searchParams.get('id'); // Obtención del id desde la URL
-        const name = searchParams.get('name'); // Obtención del nombre desde la URL
+        const id = searchParams.get('id');
+        const name = searchParams.get('name');
+        const search = searchParams.get('search');
+        
+        console.log('Término de búsqueda:', search);
+
+        if (search) {
+            const products = await Product.find({
+                $or: [
+                    { name: { $regex: search, $options: 'i' } },
+                    { category: { $regex: search, $options: 'i' } }
+                ]
+            });
+            console.log('Productos encontrados:', products);
+            return new Response(JSON.stringify(products), { status: 200 });
+        }
 
         // Si se proporciona un id, obtener el producto específico
         if (id) {
@@ -57,11 +75,15 @@ export async function GET(req) {
             return new Response(JSON.stringify(product), { status: 200 });
         }
 
-        // Si no se proporciona ni un id ni un nombre, devolver todos los productos
+        // Si no hay parámetros de búsqueda, devolver todos los productos
         const products = await Product.find();
         return new Response(JSON.stringify(products), { status: 200 });
     } catch (error) {
-        return new Response(JSON.stringify({ error: 'Error al obtener productos', details: error.message }), { status: 500 });
+        console.error('Error completo:', error);
+        return new Response(JSON.stringify({ 
+            error: 'Error al obtener productos', 
+            details: error.message 
+        }), { status: 500 });
     }
 }
 
