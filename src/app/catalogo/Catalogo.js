@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { Search, ChevronDown, Filter } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Head from 'next/head'
+import banner01 from "../../../public/BANNERS CATALOGO.jpg"
 
 const truncateText = (text, maxLength) => {
   if (text.length > maxLength) {
@@ -34,7 +34,6 @@ export default function Catalogo() {
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [showMobileCategories, setShowMobileCategories] = useState(false);
   const [visibleProducts, setVisibleProducts] = useState(12);
-  const [bannerImage, setBannerImage] = useState('');
   const router = useRouter();
   const searchParams = useSearchParams();
   const observerTarget = useRef(null);
@@ -60,25 +59,9 @@ export default function Catalogo() {
     }
   }, []);
 
-  const fetchBannerImage = useCallback(async () => {
-    try {
-      const response = await fetch('/api/banner');
-      if (!response.ok) {
-        throw new Error('Error al obtener el banner');
-      }
-      const data = await response.json();
-      if (data && data.image) {
-        setBannerImage(data.image);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }, []);
-
   useEffect(() => {
     fetchProductsAndCategories();
-    fetchBannerImage();
-  }, [fetchProductsAndCategories, fetchBannerImage]);
+  }, [fetchProductsAndCategories]);
 
   useEffect(() => {
     const categoryParams = searchParams.get('categories');
@@ -154,25 +137,17 @@ export default function Catalogo() {
 
   return (
     <main className="min-h-screen bg-white">
-      <Head>
-        <title>Catálogo | Electrónica Argentina</title>
-      </Head>
       {/* Banner Image */}
       <div className="relative w-full h-[185px] md:h-80">
-        {bannerImage && (
-          <Image
-            src={bannerImage}
-            alt="Catálogo Banner"
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="brightness-75 object-cover"
-          />
-        )}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-300 text-center">
-            Productos
-          </h1>
-        </div>
+        <Image
+          src={banner01}
+          alt="Catálogo Banner"
+          fill
+          priority
+          sizes="100vw"
+          className='object-cover'
+          quality={100}
+        />
       </div>
 
       <div className="container mx-auto px-4 py-3">

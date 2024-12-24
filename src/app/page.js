@@ -20,7 +20,7 @@ import banner03laptop from "../../public/BANNERS WEB_banner 03-laptop.jpg"
 import variador from "../../public/variador.png"
 import fuente from "../../public/fuente.png"
 import control from "../../public/control.png"
-import prueba from "../../public/BANNERS WEB_banner 1x1.jpg"
+import prueba from "../../public/BANNERS 1x1.jpg"
 
 
 const bannerItems = [
