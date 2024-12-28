@@ -316,13 +316,14 @@ export default function Home() {
                 />
                 <div className="absolute top-[37%] left-[10%] z-30">
                   <div className="relative overflow-hidden">
-                    <button 
-                      href="/catalogo" 
-                      className="px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center group relative overflow-hidden text-[12px] xxsm:text-[14px] xsm:text-[17px] rounded-md"
-                    >
-                      <span className="relative z-10 group-hover:text-black transition-colors duration-300">Ver Catálogo</span>
-                      <div className="absolute inset-0 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0"></div>
-                    </button>
+                    <Link href="/catalogo">
+                      <button 
+                        className="px-2 xxsm:px-3 py-2 bg-gray-800 text-white focus:outline-none flex items-center group relative overflow-hidden text-[12px] xxsm:text-[14px] xsm:text-[17px] rounded-md"
+                      >
+                        <span className="relative z-10 group-hover:text-black transition-colors duration-300 ">Ver Catálogo</span>
+                        <div className="absolute inset-0 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0"></div>
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
