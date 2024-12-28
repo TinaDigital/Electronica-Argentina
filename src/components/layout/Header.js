@@ -16,6 +16,7 @@ import Buscador from './Buscador'
 const navLinks = [
   { href: '/catalogo', label: 'Catálogo' },
   { href: '/nosotros', label: 'Nosotros' },
+  { href: '/distribuidores', label: 'Distribuidores' },
 ]
 
 const sideNavVariants = {
@@ -78,8 +79,8 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Center logo */}
-          <div className="flex-1 flex justify-center">
+          {/* Logo centrado */}
+          <div className="absolute left-1/2 transform -translate-x-1/2">
             <Link href="/" className="text-xl font-bold text-[#0100a0]">
               <Image src={logo} alt="Logo Electronica Argentina" height={50} width={150} />
             </Link>

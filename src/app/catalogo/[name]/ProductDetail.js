@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef, useContext, useCallback } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, Plus, Minus, ShoppingCart } from 'lucide-react';
+import { ChevronDown, Plus, Minus, ShoppingCart, X } from 'lucide-react';
+import { FaFacebook, FaTwitter, FaPinterest } from 'react-icons/fa';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -63,6 +64,7 @@ const ProductDetail = ({ params }) => {
   const [quantity, setQuantity] = useState(1);
   const [showCross, setShowCross] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
   const sliderRef = useRef(null);
 
   const fetchRecommendedProducts = useCallback(async (categoryId) => {
@@ -191,14 +193,37 @@ const ProductDetail = ({ params }) => {
   return (
     <>
     <main className="container mx-auto px-4 md:mt-10">
+      {isZoomed && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center cursor-zoom-out"
+          onClick={() => setIsZoomed(false)}
+        >
+          <button 
+            className="absolute top-4 right-4 text-white p-2 hover:bg-white/10 rounded-full"
+            onClick={() => setIsZoomed(false)}
+          >
+            <X className="w-8 h-8" />
+          </button>
+          <div className="relative w-[90vw] h-[90vh]">
+            <Image
+              src={productImages[selectedImage]}
+              alt={productInfo.name}
+              fill
+              style={{ objectFit: "contain" }}
+              quality={100}
+              priority
+            />
+          </div>
+        </div>
+      )}
       <div className="flex flex-col md:flex-row gap-10">
         {/* Imágenes del producto */}
         <div className="md:w-1/2">
-          <div className="relative w-full h-[320px] md:h-[420px] lg:h-[500px]  rounded-lg overflow-hidden">
+          <div className="relative w-full h-[320px] md:h-[420px] lg:h-[500px] rounded-lg overflow-hidden cursor-zoom-in" onClick={() => setIsZoomed(true)}>
             {productImages.length > 1 ? (
               <Slider ref={sliderRef} {...settings}>
                 {productImages.map((image, index) => (
-                  	<div key={index} className="relative w-full h-[350px] md:h-[420px] lg:h-[500px] hover:scale-105 transition-transform duration-300">
+                  <div key={index} className="relative w-full h-[350px] md:h-[420px] lg:h-[500px] hover:scale-105 transition-transform duration-300">
                     <Image
                       src={image}
                       alt={`${productInfo.name} - Image ${index + 1}`}
@@ -254,31 +279,26 @@ const ProductDetail = ({ params }) => {
             <p className="text-xl mb-8 text-gray-700">{productInfo.description}</p>
           </div>
 
-          {/* Secciones expandibles */}
+          {/* Características del producto */}
           <div className="border-t border-gray-200 pt-6">
-            <div className="flex space-x-4 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Detalles del Producto</h3>
               <button 
                 onClick={() => setShowDetails(!showDetails)}
-                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${showDetails ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
               >
-                Características
-              </button>
-              <button 
-                onClick={() => setShowDetails(!showDetails)}
-                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${!showDetails ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-              >
-                Detalles
+                {showDetails ? (
+                  <ChevronDown className="w-5 h-5" />
+                ) : (
+                  <Plus className="w-5 h-5" />
+                )}
               </button>
             </div>
-            {showDetails ? (
-              <div className="mt-4 bg-gray-50 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold mb-3">Características del Producto</h3>
-                <p className="text-lg text-gray-700 whitespace-pre-wrap">{productInfo.details}</p>
-              </div>
-            ) : (
-              <div className="mt-4 bg-gray-50 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold mb-3">Detalles Técnicos</h3>
-                <p className="text-lg text-gray-700">Información técnica detallada del producto.</p>
+            {showDetails && (
+              <div className="mt-2 bg-gray-50 p-6 rounded-lg border border-gray-100 shadow-sm">
+                <p className="text-lg text-gray-700 whitespace-pre-wrap leading-relaxed">
+                  {productInfo.details}
+                </p>
               </div>
             )}
           </div>
@@ -310,19 +330,25 @@ const ProductDetail = ({ params }) => {
                 <Plus className="w-5 h-5 text-gray-600" />
               </button>
             </div>
-
             {/* Botón de agregar al carrito */}
-            <button 
-                  onClick={() => {
-                    handleAddToCart();
-                    setIsCartOpen(true);
-                  }} 
-                  className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-full hover:bg-blue-700 transition duration-300 flex items-center justify-center text-lg font-semibold shadow-md"
-                >
-                  <ShoppingCart className="w-6 h-6 mr-3" />
+            <div className="relative overflow-hidden flex-1">
+              <button
+                onClick={() => {
+                  handleAddToCart();
+                  setIsCartOpen(true);
+                }}
+                className="w-full px-6 py-3 bg-blue-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center group relative overflow-hidden hover:border-blue-900 hover:border-2"
+              >
+                <span className="relative z-10 group-hover:text-blue-900 transition-colors duration-300 flex items-center">
+                  <ShoppingCart className="w-6 h-6 mr-3 group-hover:animate-[spin_0.5s_ease-in-out]" />
                   Agregar al carrito
-            </button>
+                </span>
+                <div className="absolute inset-0 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0 group-active:scale-95"></div>
+              </button>
+            </div>
+            
           </div>
+          
         </div>
       </div>
 

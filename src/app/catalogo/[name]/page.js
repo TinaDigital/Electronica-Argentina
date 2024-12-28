@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
     const product = await response.json();
 
     return {
-      title: `${product.name || 'Producto desconocido'} - Electrónica Argentina`,
+      title: `${product.name || 'Producto desconocido'} | Electrónica Argentina`,
       description: product.description || 'Descripción no disponible',
       icons: {
         icon: '/favicon.ico',
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }) {
   } catch (error) {
     console.error('Error al obtener el producto:', error);
     return {
-      title: 'Error - Electrónica Argentina',
+      title: 'Error | Electrónica Argentina',
       description: 'No se pudo cargar la información del producto.',
     };
   }

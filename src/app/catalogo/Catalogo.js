@@ -33,10 +33,10 @@ export default function Catalogo() {
   const [sortOrder, setSortOrder] = useState('');
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [showMobileCategories, setShowMobileCategories] = useState(false);
-  const [visibleProducts, setVisibleProducts] = useState(12);
+  const [visibleProducts, setVisibleProducts] = useState(26);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const observerTarget = useRef(null);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const fetchProductsAndCategories = useCallback(async () => {
     try {
@@ -70,28 +70,13 @@ export default function Catalogo() {
     }
   }, [searchParams]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        if (entries[0].isIntersecting) {
-          setVisibleProducts(prevVisible => prevVisible + 12);
-        }
-      },
-      { threshold: 1 }
-    );
-
-    const currentObserverTarget = observerTarget.current;
-
-    if (currentObserverTarget) {
-      observer.observe(currentObserverTarget);
-    }
-
-    return () => {
-      if (currentObserverTarget) {
-        observer.unobserve(currentObserverTarget);
-      }
-    };
-  }, []);
+  const handleLoadMore = () => {
+    setLoadingMore(true);
+    setTimeout(() => {
+      setVisibleProducts(prev => prev + 12);
+      setLoadingMore(false);
+    }, 800);
+  };
 
   const filteredProducts = products.filter(product =>
     product.images.length > 0 &&
@@ -136,7 +121,7 @@ export default function Catalogo() {
   };
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen  to-blue-100">
       {/* Banner Image */}
       <div className="relative w-full h-[185px] md:h-80">
         <Image
@@ -297,12 +282,26 @@ export default function Catalogo() {
                     </div>
                   ))}
             </div>
+            
+            {/* Botón Ver Más */}
+            {currentProducts.length < sortedProducts.length && (
+              <div className="w-full flex justify-center p-8">
+                {loadingMore ? (
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                ) : (
+                  <div className="relative overflow-hidden">
+                    <button
+                      onClick={handleLoadMore}
+                      className="px-6 py-2 bg-blue-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center group relative overflow-hidden hover:border-blue-900 hover:border-2"
+                    >
+                      <span className="relative z-10 group-hover:text-blue-900 transition-colors duration-300">Ver Más</span>
+                      <div className="absolute inset-0 bg-white transform -translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0"></div>
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-
-          {/* Infinite Scroll Observer */}
-          {currentProducts.length < sortedProducts.length && (
-            <div ref={observerTarget} className="h-10 mt-4"></div>
-          )}
         </div>
       </div>
     </main>
