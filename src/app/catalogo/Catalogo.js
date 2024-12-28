@@ -5,7 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { Search, ChevronDown, Filter } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import banner01 from "../../../public/BANNERS CATALOGO.jpg"
+import banner01 from "../../../public/BANNERS WEB-15.jpg"
+import banner02 from "../../../public/BANNERS WEB-19.jpg"
+import banner03 from "../../../public/BANNERS WEB-20.jpg"
 
 const truncateText = (text, maxLength) => {
   if (text.length > maxLength) {
@@ -37,6 +39,27 @@ export default function Catalogo() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const getResponsiveBanner = () => {
+    if (windowWidth < 768) {
+      return banner03; // Mobile
+    } else if (windowWidth < 1024) {
+      return banner02; // Tablet  
+    } else {
+      return banner01; // Desktop
+    }
+  };
 
   const fetchProductsAndCategories = useCallback(async () => {
     try {
@@ -123,9 +146,9 @@ export default function Catalogo() {
   return (
     <main className="min-h-screen  to-blue-100">
       {/* Banner Image */}
-      <div className="relative w-full h-[185px] md:h-80">
+      <div className="w-full relative lg:aspect-[55/9] aspect-[16/9] sm:aspect-[25/9] md:aspect-[35/9] overflow-hidden">
         <Image
-          src={banner01}
+          src={getResponsiveBanner()}
           alt="Catálogo Banner"
           fill
           priority

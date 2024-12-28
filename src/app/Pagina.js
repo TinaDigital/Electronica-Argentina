@@ -8,19 +8,20 @@ import { HeroHighlight, Highlight } from '@/components/ui/hero-highlight'
 import { HoverEffect } from '@/components/ui/card-hover-effect'
 import Link from 'next/link'
 import Image from 'next/image'
-import banner01mobile from "../../public/BANNERS WEB_banner 01-mobile.jpg"
+import banner01mobile from "../../public/BANNERS WEB_banner promo-celu.jpg"
 import banner02mobile from "../../public/BANNERS WEB_banner 02-mobile.jpg"
 import banner03mobile from "../../public/BANNERS WEB_banner 03-mobile.jpg"
-import banner01desktop from "../../public/BANNERS WEB_banner 01-desktop.jpg"
+import banner01desktop from "../../public/BANNERS WEB_banner promo-desktop.jpg"
 import banner02desktop from "../../public/BANNERS WEB_banner 02-desktop.jpg"
 import banner03desktop from "../../public/BANNERS WEB_banner 03-desktop.jpg"
-import banner01laptop from "../../public/BANNERS WEB_banner 01-laptop.jpg"
+import banner01laptop from "../../public/BANNERS WEB_banner promo-tablet.jpg"
 import banner02laptop from "../../public/BANNERS WEB_banner 02-laptop.jpg"
 import banner03laptop from "../../public/BANNERS WEB_banner 03-laptop.jpg"
 import variador from "../../public/variador.png"
 import fuente from "../../public/fuente.png"
 import control from "../../public/control.png"
-import prueba from "../../public/BannerCatalago.jpg"
+import prueba from "../../public/BANNERS WEB_banner-1x1 a.jpg"
+import anillo from "../../public/anillo.png"
 
 
 const bannerItems = [
@@ -291,19 +292,41 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="w-full lg:w-1/2 lg:order-2"
           >
-            <Link href="/catalogo">
-              <div className="relative w-full aspect-square max-w-md mx-auto bg-gray-200 rounded-lg mb-4 cursor-pointer transition-transform hover:scale-105">
+            
+              <div className="relative w-full aspect-square max-w-md mx-auto bg-gray-200 rounded-lg mb-4 overflow-hidden sm:overflow-visible">
                 <Image
                   src={prueba}
                   alt="Imagen de prueba"
                   fill
-                  className="object-cover rounded-lg z-10" 
+                  className="object-cover rounded-lg z-10"
                 />
-                <div className="absolute bottom-4 left-4">
-                  <HoverBorderGradient>Ver Catálogo</HoverBorderGradient>
+                <Image 
+                  src={anillo}
+                  alt="Anillo decorativo"
+                  width={150}
+                  height={150}
+                  className="absolute -top-10 -right-10 z-20 opacity-800 -rotate-[70deg]"
+                />
+                <Image
+                  src={anillo}
+                  alt="Anillo decorativo"
+                  width={150}
+                  height={150} 
+                  className="absolute -bottom-10 -left-10 z-20 opacity-800 rotate-[100deg]"
+                />
+                <div className="absolute top-[37%] left-[10%] z-30">
+                  <div className="relative overflow-hidden">
+                    <button 
+                      href="/catalogo" 
+                      className="px-3 py-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center group relative overflow-hidden text-[12px] xxsm:text-[14px] xsm:text-[17px] rounded-md"
+                    >
+                      <span className="relative z-10 group-hover:text-black transition-colors duration-300">Ver Catálogo</span>
+                      <div className="absolute inset-0 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0"></div>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </Link>
+            
           </motion.div>
         </div>
       </motion.div>
