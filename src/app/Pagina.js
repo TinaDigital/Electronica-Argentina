@@ -399,8 +399,8 @@ export default function Home() {
                   )}
                 </AnimatePresence>
               </div>
-              <div className="p-4 sm:p-6">
-                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800 mb-2">
+              <div className="">
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800">
                   {product.title}
                 </h2>
                 <p className="text-xs sm:text-sm lg:text-base text-gray-600 line-clamp-2">
