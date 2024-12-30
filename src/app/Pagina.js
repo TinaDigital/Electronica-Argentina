@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
 import { HeroHighlight, Highlight } from '@/components/ui/hero-highlight'
 import { HoverEffect } from '@/components/ui/card-hover-effect'
 import Link from 'next/link'
@@ -48,16 +47,19 @@ const bannerItems = [
 const productos = [
   {
     image: variador,
+    hoverImage: prueba, // Imagen provisional para hover
     title: "FotoControl",
     subtitle: "Detector de movimiento",
   },
   {
     image: fuente,
+    hoverImage: prueba, // Imagen provisional para hover
     title: "Cargador Modular USB A+ C CR", 
     subtitle: "Cargador modular con 1000W",
   },
   {
     image: control,
+    hoverImage: prueba, // Imagen provisional para hover
     title: "Variador",
     subtitle: "Variador de voltaje",
   }
@@ -106,6 +108,7 @@ export default function Home() {
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
   const [direction, setDirection] = useState(0)
+  const [hoveredProduct, setHoveredProduct] = useState(null)
 
   useEffect(() => {
     const handleResize = () => {
@@ -190,7 +193,6 @@ export default function Home() {
       opacity: 1
     })
   }
-
   return (
     <motion.main 
       initial="hidden"
@@ -277,14 +279,18 @@ export default function Home() {
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="w-full lg:w-1/2 lg:order-1 text-center lg:text-left"
+            className="w-full lg:w-1/2 lg:order-1 text-center lg:text-left relative"
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 text-gray-800">
-              ELECTRONICA <span className="text-gray-700 font-normal ">Argentina</span>
-            </h1>
-            <HeroHighlight className="text-xl text-gray-600 mb-6">
-              <Highlight>Innovación y calidad</Highlight> en productos electrónicos, liderando el mercado nacional con soluciones tecnológicas de vanguardia.
-            </HeroHighlight>
+            <div className="h-full w-full rounded-md flex items-center justify-center">
+              <div className="relative z-10">
+                <h1 className="text-4xl md:text-6xl font-bold mb-4 text-gray-800">
+                  ELECTRONICA <span className="text-gray-700 font-normal">Argentina</span>
+                </h1>
+                <HeroHighlight className="text-xl text-gray-600 mb-6">
+                  <Highlight>Innovación y calidad</Highlight> en productos electrónicos, liderando el mercado nacional con soluciones tecnológicas de vanguardia.
+                </HeroHighlight>
+              </div>
+            </div>
           </motion.div>
           <motion.div 
             initial={{ x: 100, opacity: 0 }}
@@ -292,42 +298,40 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="w-full lg:w-1/2 lg:order-2"
           >
-            
-              <div className="relative w-full aspect-square max-w-md mx-auto bg-gray-200 rounded-lg mb-4 overflow-hidden sm:overflow-visible">
-                <Image
-                  src={prueba}
-                  alt="Imagen de prueba"
-                  fill
-                  className="object-cover rounded-lg z-10"
-                />
-                <Image 
-                  src={anillo}
-                  alt="Anillo decorativo"
-                  width={150}
-                  height={150}
-                  className="absolute -top-10 -right-10 z-20 opacity-800 -rotate-[70deg]"
-                />
-                <Image
-                  src={anillo}
-                  alt="Anillo decorativo"
-                  width={150}
-                  height={150} 
-                  className="absolute -bottom-10 -left-10 z-20 opacity-800 rotate-[100deg]"
-                />
-                <div className="absolute top-[37%] left-[10%] z-30">
-                  <div className="relative overflow-hidden">
-                    <Link href="/catalogo">
-                      <button 
-                        className="px-2 xxsm:px-3 py-2 bg-gray-800 text-white focus:outline-none flex items-center group relative overflow-hidden text-[12px] xxsm:text-[14px] xsm:text-[17px] rounded-md"
-                      >
-                        <span className="relative z-10 group-hover:text-black transition-colors duration-300 ">Ver Catálogo</span>
-                        <div className="absolute inset-0 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0"></div>
-                      </button>
-                    </Link>
-                  </div>
+            <div className="relative w-full aspect-square max-w-md mx-auto bg-gray-200 rounded-lg mb-4 overflow-hidden sm:overflow-visible">
+              <Image
+                src={prueba}
+                alt="Imagen de prueba"
+                fill
+                className="object-cover rounded-lg z-10"
+              />
+              <Image 
+                src={anillo}
+                alt="Anillo decorativo"
+                width={150}
+                height={150}
+                className="absolute -top-10 -right-10 z-20 opacity-800 -rotate-[70deg]"
+              />
+              <Image
+                src={anillo}
+                alt="Anillo decorativo"
+                width={150}
+                height={150} 
+                className="absolute -bottom-10 -left-10 z-20 opacity-800 rotate-[100deg]"
+              />
+              <div className="absolute top-[37%] left-[10%] z-30">
+                <div className="relative overflow-hidden">
+                  <Link href="/catalogo">
+                    <button 
+                      className="px-2 xxsm:px-3 py-2 bg-gray-800 text-white focus:outline-none flex items-center group relative overflow-hidden text-[12px] xxsm:text-[14px] xsm:text-[17px] rounded-md"
+                    >
+                      <span className="relative z-10 group-hover:text-black transition-colors duration-300 ">Ver Catálogo</span>
+                      <div className="absolute inset-0 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0"></div>
+                    </button>
+                  </Link>
                 </div>
               </div>
-            
+            </div>
           </motion.div>
         </div>
       </motion.div>
@@ -335,13 +339,13 @@ export default function Home() {
       {/* Sección de Productos Destacados */}
       <motion.section 
         variants={itemVariants}
-        className="w-full py-12 bg-white"
+        className="w-full py-8 sm:py-12 lg:py-16 bg-white flex flex-col items-center"
       >
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center px-4 sm:px-6 lg:px-8">
           <div className="relative inline-block text-center">
             <motion.h2 
               initial={{ opacity: 1 }}
-              className="text-2xl xsm:text-3xl font-bold text-center mb-8 text-gray-800 relative pb-2 inline-block whitespace-nowrap"
+              className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 lg:mb-12 text-gray-800 relative pb-2 inline-block whitespace-nowrap"
             >
               Productos Destacados
               <motion.div 
@@ -354,7 +358,7 @@ export default function Home() {
             </motion.h2>
           </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:px-2 max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xxsm:mx-4 xsm:mx-8 sm:mx-0 justify-center">
           {productos.map((product, index) => (
             <motion.div
               key={product.title}
@@ -362,23 +366,44 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white overflow-hidden cursor-pointer"
+              className="bg-white rounded-lg overflow-hidden cursor-pointer"
+              onMouseEnter={() => setHoveredProduct(index)}
+              onMouseLeave={() => setHoveredProduct(null)}
             >
-              <div className="relative h-[160px] sm:h-64 lg:h-[300px] bg-gray-100 flex items-center justify-center group">
-                <Image
-                  src={product.image}
-                  alt={product.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-contain"
-                />
+              <div className="relative h-[200px] xxsm:h-[250px] sm:h-[200px] md:h-[250px] lg:h-[300px] bg-gray-50 flex items-center justify-center">
+                <AnimatePresence>
+                  {hoveredProduct === index ? (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute inset-0"
+                    >
+                      <Image
+                        src={product.hoverImage}
+                        alt={`${product.title} hover`}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-contain"
+                      />
+                    </motion.div>
+                  ) : (
+                    <Image
+                      src={product.image}
+                      alt={product.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-contain"
+                    />
+                  )}
+                </AnimatePresence>
               </div>
-              <div>
-                <h2 className="mb-3 sm:mb-0 text-sm sm:text-xl font-semibold text-gray-800">
+              <div className="p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-800 mb-2">
                   {product.title}
                 </h2>
-                <p className="hidden md:block text-xs sm:text-sm text-gray-600">
+                <p className="text-xs sm:text-sm lg:text-base text-gray-600 line-clamp-2">
                   {product.subtitle}
                 </p>
               </div>

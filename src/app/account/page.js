@@ -1,63 +1,87 @@
+"use client";
+
+import React from 'react'
 import Image from 'next/image'
-import { Send, Mail, CircleHelp } from 'lucide-react'
 import Link from 'next/link'
-import banner from '../../../public/banner.jpg'
+import { BackgroundBeams } from "@/components/ui/background-beams"
+import { motion } from "framer-motion"
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient"
 
 export default function AccountPage() {
-  return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="relative w-full h-64 md:h-80">
-        <Image
-          src={banner}
-          alt="Background"
-          fill
-          objectFit="fill"
-        />
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-4xl font-bold text-white mb-6">MI CUENTA</h1>
-          <div className="space-x-4 md:flex">
-            <Link href="/account/login">
-            <button className="flex bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-700 transition-colors">
-              INICIAR SESIÓN
-            </button>
-            </Link>
-            <Link href="/account/register">
-            <button className="flex bg-white text-gray-800 px-6 py-2 rounded border border-gray-800 hover:bg-gray-100 transition-colors">
-              CREAR CUENTA
-            </button>
-            </Link>
-          </div>
-        </div>
-      </div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
 
-      <div className="max-w-5xl mx-auto mt-12 px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center">
-            <Send className="w-12 h-12 mx-auto mb-4 text-gray-600" />
-            <h2 className="text-xl font-semibold mb-2">EMPEZAR</h2>
-            <p className="text-gray-600 mb-4">
-                Registre su producto y obtenga toda la información que necesita para empezar.
-            </p>
-            <a href="#" className="text-blue-600 hover:underline">Catalogo</a>
-          </div>
-          <div className="text-center">
-            <CircleHelp className="w-12 h-12 mx-auto mb-4 text-gray-600" />
-            <h2 className="text-xl font-semibold mb-2">ASISTENCIA</h2>
-            <p className="text-gray-600 mb-4">
-                ¿Tiene preguntas sobre su producto? Tenemos las respuestas.
-            </p>
-            <a href="#" className="text-blue-600 hover:underline">Contacto</a>
-          </div>
-          <div className="text-center">
-            <Mail className="w-12 h-12 mx-auto mb-4 text-gray-600" />
-            <h2 className="text-xl font-semibold mb-2">CORREO ELECTRONICO</h2>
-            <p className="text-gray-600 mb-4">
-                Manténgase al día con Logitech mediante una suscripción a nuestra newsletter.
-            </p>
-            <a href="#" className="text-blue-600 hover:underline">Foro</a>
-          </div>
-        </div>
-      </div>
-    </div>
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
+
+  return (
+    <motion.div 
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="min-h-screen bg-neutral-900 flex items-center justify-center -mt-20 md:-mt-5"
+    >
+      <motion.div 
+        variants={itemVariants}
+        className="h-full w-full relative flex flex-col items-center justify-center p-4 md:px-8"
+      >
+        <motion.div 
+          variants={itemVariants}
+          className="max-w-2xl w-full"
+        >
+          <motion.h1 
+            variants={itemVariants}
+            className="z-20 text-2xl xxsm:text-3xl md:text-4xl lg:text-6xl bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600 text-center font-sans font-bold pb-2 md:pb-3 mb-2 md:mb-3"
+          >
+            Bienvenido a Electrónica Argentina
+          </motion.h1>
+          <motion.p 
+            variants={itemVariants}
+            className="text-neutral-400 text-center text-xs sm:text-sm md:text-base max-w-lg mx-auto mb-4 md:mb-8 relative z-10 px-2"
+          >
+            Gestione sus pedidos y consulte nuestro catálogo de productos
+          </motion.p>
+          <motion.div 
+            variants={itemVariants}
+            className="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-center md:gap-4 relative z-10 px-4 md:px-0"
+          >
+            <Link href="/account/login" className="w-full md:w-auto">
+              <HoverBorderGradient
+                className="tracking-wider text-xs sm:text-sm md:text-base"
+                containerClassName="w-full"
+                duration={2}
+              >
+                INICIAR SESIÓN
+              </HoverBorderGradient>
+            </Link>
+            <Link href="/account/register" className="w-full md:w-auto">
+              <HoverBorderGradient
+                className="tracking-wider text-xs sm:text-sm md:text-base"
+                containerClassName="w-full"
+                duration={2}
+              >
+                REGISTRARSE
+              </HoverBorderGradient>
+            </Link>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+      <BackgroundBeams />
+    </motion.div>
   )
 }
