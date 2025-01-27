@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X, User, ChevronRight, ShoppingCart, Search } from 'lucide-react'
+import { Menu, X, User, ShoppingCart } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
@@ -11,7 +11,6 @@ import logo from "../../../public/LOGO-ELECTRONICA ARGENTINA-02.png"
 import Cart from './Cart'
 import { useContext } from 'react'
 import { CartContext } from '../../context/CartContext'
-import Buscador from './Buscador'
 
 const navLinks = [
   { href: '/catalogo', label: 'Catálogo' },
@@ -33,7 +32,6 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [admin, setAdmin] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const { cartItems } = useContext(CartContext);
   
   useEffect(() => {
@@ -42,7 +40,6 @@ export default function Header() {
 
   const toggleNavbar = () => setIsOpen(!isOpen)
   const toggleCart = () => setIsCartOpen(!isCartOpen)
-  const toggleSearch = () => setIsSearchOpen(!isSearchOpen)
 
   if (isAdminRoute()) return null;
 
@@ -89,14 +86,6 @@ export default function Header() {
           {/* Right section with user menu and cart */}
           <div className="hidden lg:flex items-center">
             <div className="ml-4 flex items-center md:ml-6">
-              <div className="relative w-full max-w-xs">
-                <button 
-                  onClick={toggleSearch}
-                  className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300"
-                >
-                  <Search size={22} />
-                </button>
-              </div>
               {status === 'authenticated' ? (
                 <>
                   <p className="text-gray-600 px-3 py-2 rounded-md text-sm font-medium">
@@ -135,12 +124,6 @@ export default function Header() {
 
           {/* Mobile Search and Cart */}
           <div className="flex items-center lg:hidden">
-            <button 
-              onClick={toggleSearch}
-              className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300"
-            >
-              <Search size={22} />
-            </button>
             <button
               onClick={toggleCart}
               className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300 relative"
@@ -213,7 +196,6 @@ export default function Header() {
         )}
       </AnimatePresence>
       <Cart isOpen={isCartOpen} onClose={toggleCart} />
-      <Buscador isSearchOpen={isSearchOpen} closeSearch={toggleSearch} />
     </nav>
   )
 }
