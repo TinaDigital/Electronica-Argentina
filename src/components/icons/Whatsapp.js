@@ -9,7 +9,7 @@ function Whatsapp() {
     <div className="App z-20">
       <ReactWhatsappButton
         countryCode="54"
-        phoneNumber="1150979192"
+        phoneNumber="1152267065"
         message="Hola!"
       />
     </div>

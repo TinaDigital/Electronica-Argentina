@@ -40,7 +40,7 @@ function Form({ onBack, cartItems }) {
       `Quiero comprar los siguientes productos:\n${productos}\n\n` +
       `¡Gracias!`;
 
-    const urlWhatsapp = `https://wa.me/5491150979192?text=${encodeURIComponent(mensaje)}`;
+    const urlWhatsapp = `https://wa.me/5491152267065?text=${encodeURIComponent(mensaje)}`;
     window.open(urlWhatsapp, '_blank');
   };
 

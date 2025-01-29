@@ -57,6 +57,7 @@ export default function Header() {
             <button
               onClick={toggleNavbar}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-[#0100a0] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#0100a0]"
+              aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -94,6 +95,7 @@ export default function Header() {
                   <button
                     onClick={() => signOut({ callbackUrl: '/' })}
                     className="bg-[#0100a0] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors duration-300 ml-2"
+                    aria-label="Cerrar sesión"
                   >
                     Cerrar sesión
                   </button>
@@ -102,6 +104,7 @@ export default function Header() {
                 <Link
                   href="/account"
                   className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300"
+                  aria-label="Iniciar sesión"
                 >
                   <User size={22} />
                 </Link>
@@ -111,6 +114,7 @@ export default function Header() {
               <button
                 onClick={toggleCart}
                 className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300 relative"
+                aria-label="Abrir carrito"
               >
                 <ShoppingCart size={22} />
                 {cartItems.length > 0 && (
@@ -127,6 +131,7 @@ export default function Header() {
             <button
               onClick={toggleCart}
               className="text-gray-600 hover:text-[#0100a0] p-2 rounded-md transition-colors duration-300 relative"
+              aria-label="Abrir carrito"
             >
               <ShoppingCart size={22} />
               {cartItems.length > 0 && (

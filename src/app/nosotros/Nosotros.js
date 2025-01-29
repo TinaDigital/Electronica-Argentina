@@ -259,11 +259,11 @@ export default function AboutUs() {
               whileHover={{ scale: 1.1 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              Encontranos Aqui
+              Encontranos Aquí
             </motion.h2>
             <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-xl">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.0168878895468!2d-58.38375908417444!3d-34.60373446500755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4aa9f0a6da5edb%3A0x11bead4e234e558b!2sObelisco!5e0!3m2!1ses!2sar!4v1635959481548!5m2!1ses!2sar"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.0913020872467!2d-58.1794595976462!3d-34.82879687038006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a327fa7c295387%3A0xde93dba1cdc29817!2sC.%20416%201242%2C%20B1890%20Juan%20Mar%C3%ADa%20Guti%C3%A9rrez%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1738000449406!5m2!1ses-419!2sar" 
                 width="100%" 
                 height="100%" 
                 style={{ border: 0 }} 
@@ -284,14 +284,14 @@ export default function AboutUs() {
               >
                 Electrónica Argentina
               </motion.h3>
-              <motion.p className="text-lg text-gray-600">Av. Corrientes 1234</motion.p>
-              <motion.p className="text-lg text-gray-600">Ciudad Autónoma de Buenos Aires</motion.p>
-              <motion.p className="text-lg text-gray-600">Argentina</motion.p>
+              <motion.p className="text-lg text-gray-600">Calle 416 N°1242</motion.p>
+              <motion.p className="text-lg text-gray-600">Juan María Gutiérrez, Berazategui</motion.p>
+              <motion.p className="text-lg text-gray-600">Provincia de Buenos Aires, Argentina</motion.p>
               <motion.p 
                 className="text-lg text-[#004271] font-semibold mt-4"
                 whileHover={{ scale: 1.1 }}
               >
-                Tel: (011) 4567-8900
+                Tel: (011) 5226-7065
               </motion.p>
             </motion.div>
           </motion.div>
@@ -300,7 +300,6 @@ export default function AboutUs() {
       </motion.div>
     </AnimatePresence>
   );
-}
 
 function StatItem({ number, text, suffix = "+" }) {
   return (
@@ -325,4 +324,5 @@ function StatItem({ number, text, suffix = "+" }) {
       </motion.p>
     </motion.div>
   );
+}
 }

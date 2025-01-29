@@ -469,7 +469,7 @@ export default function Home() {
             No dudes en contactarnos
           </motion.p>
           <motion.button 
-            onClick={() => window.open('https://wa.me/541150979192', '_blank')}
+            onClick={() => window.open('https://wa.me/541152267065', '_blank')}
             whileHover={{
               scale: 1.1,
               transition: {
