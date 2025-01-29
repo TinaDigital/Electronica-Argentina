@@ -1,9 +1,9 @@
 import { AppProvider } from "../components/menu/AppContext";
 import "./globals.css";
-import Header from '../components/layout/Header';
+//import Header from '../components/layout/Header';
 import { DM_Sans } from 'next/font/google'; // Importar fuente DM Sans
 import Whatsapp from '../components/icons/Whatsapp'
-import Footer from '../components/layout/Footer'
+//import Footer from '../components/layout/Footer'
 import { Suspense } from 'react'
 import { Analytics } from "@vercel/analytics/react"
 import TabTitleChanger from '../components/Title'
@@ -22,13 +22,11 @@ export default function RootLayout({ children }) {
       <body className={`antialiased ${dmSans.className}`}> {/* Aplicar fuente */}
         <TabTitleChanger />
         <AppProvider>
-          <Header />
           <Whatsapp />
           <Suspense fallback={<div>Cargando...</div>}>
             {children}
             <Analytics />
           </Suspense>
-          <Footer />
         </AppProvider>
       </body>
     </html>

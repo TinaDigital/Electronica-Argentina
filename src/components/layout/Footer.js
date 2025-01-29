@@ -18,18 +18,18 @@ export default function Footer() {
             <h3 className="text-lg font-bold mb-4">Contacto</h3>
             <div className="flex flex-col items-center md:items-start gap-3">
               <a
-                href="mailto:contacto@tinadigital.com"
+                href="mailto:Ventas@electronicargentina.com.ar"
                 className="flex items-center gap-2 text-sm hover:text-blue-400 transition-colors"
               >
                 <Mail size={16} />
-                contacto@tinadigital.com
+                Ventas@electronicargentina.com.ar
               </a>
               <a
-                href="tel:+541152267065"
+                href="tel:+54 9 2229433411"
                 className="flex items-center gap-2 text-sm hover:text-blue-400 transition-colors"
               >
                 <Phone size={16} />
-                +54 11 5226 7065
+                +54 9 2229433411
               </a>
             </div>
           </div>
